@@ -1,13 +1,13 @@
-package com.cv;
+package com.cv.dataqualityapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DataQualityApiApplication {
+public class DataqualityapiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DataQualityApiApplication.class, args);
+		SpringApplication.run(DataqualityapiApplication.class, args);
 	}
 
 }
