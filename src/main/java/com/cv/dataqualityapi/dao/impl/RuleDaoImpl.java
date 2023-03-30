@@ -4,4 +4,8 @@ import com.cv.dataqualityapi.dao.RuleDao;
 
 public class RuleDaoImpl implements RuleDao {
 
+	@Override
+	public void test() {
+		
+	}
 }
