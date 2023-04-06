@@ -1,5 +1,7 @@
 package com.cv.dataqualityapi.rest.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,10 +18,27 @@ public class ClientRestImpl implements ClientRest {
 	@Autowired
 	private ClientService clientService;
 
+	
 	@Override
-	public String insertClients(Clients clients) {
+	public List<Clients> getClients() {
+		return clientService.getClients();
+	}
+	
+	@Override
+	public String insertClients(Clients clients) throws Exception {
 		log.info("Test Logger");
 		return clientService.insertClients(clients);
+	}
+
+	@Override
+	public String deleteClients(Clients clients) throws Exception {
+		return clientService.deleteClients(clients);
+	}
+	
+	@Override
+	public String updateClients(Clients clients) throws Exception {
+		log.info("Test Logger", clients);
+		return clientService.updateClients(clients);
 	}
 
 }

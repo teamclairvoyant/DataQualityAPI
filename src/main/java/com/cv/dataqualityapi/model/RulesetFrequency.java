@@ -23,7 +23,7 @@ import lombok.ToString;
 public class RulesetFrequency {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "freq_id")
 	private Integer freqId;
 

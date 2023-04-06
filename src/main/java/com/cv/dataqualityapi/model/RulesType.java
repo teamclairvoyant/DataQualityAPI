@@ -5,12 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+
+@NamedQueries({
+	@NamedQuery(name = "RulesType.getRuleTypeByTypeName", query = "SELECT rt from RulesType rt where upper(rt.typeName) = upper(:typeName)"),
+	@NamedQuery(name = "RulesType.getTypeCountByTypeName", query = "SELECT count(rt) from RulesType rt where upper(rt.typeName) = upper(:typeName)")
+	})
 
 @Getter
 @Setter
@@ -21,7 +29,7 @@ import lombok.ToString;
 public class RulesType {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rule_type_id")
 	private Integer ruleTypeId;
 
