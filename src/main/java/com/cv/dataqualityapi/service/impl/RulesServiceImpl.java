@@ -1,6 +1,7 @@
 package com.cv.dataqualityapi.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,27 @@ public class RulesServiceImpl implements RulesService {
 
 	@Override
 	public String createRules(List<RulesWrapper> rulesWrapper) throws Exception {
-		List<Rules> rule = mapRulesWrapperRule(rulesWrapper);
+		Date createdTs = new Date();
+		List<Rules> rule = mapRulesWrapperRule(rulesWrapper, createdTs, createdTs);
 		ruleRepository.saveAll(rule);
 		return DataQualityContants.SAVED;
 	}
 
-	private List<Rules> mapRulesWrapperRule(List<RulesWrapper> rulesWrapperList) throws Exception {
+	private List<Rules> mapRulesWrapperRule(List<RulesWrapper> rulesWrapperList, Date createdTs, Date updatedTs)
+			throws Exception {
 		ArrayList<Rules> rulesList = new ArrayList<>();
 		for (RulesWrapper rulesWrapper : rulesWrapperList) {
 			Rules rule = new Rules();
 			if (rulesWrapper.getRuleId() != null) {
 				rule.setRuleId(rulesWrapper.getRuleId());
+				Rules ruleById = ruleRepository.getReferenceById(rulesWrapper.getRuleId());
+				rule.setCreatedTs(ruleById.getCreatedTs());
+				rule.setUpdatedTs(updatedTs);
+				rule.setCreatedBy(ruleById.getCreatedBy());
+				rule.setUpdatedBy(rulesWrapper.getClientName());
+			} else {
+				rule.setCreatedTs(createdTs);
+				rule.setCreatedBy(rulesWrapper.getClientName());
 			}
 			boolean existsByClientName = clientRepository.existsByClientName(rulesWrapper.getClientName());
 			boolean existsByTypeName = rulesTypeRepository.existsByTypeName(rulesWrapper.getTypeName());
@@ -68,7 +79,8 @@ public class RulesServiceImpl implements RulesService {
 
 	@Override
 	public String updateRules(List<RulesWrapper> rulesWrapper) throws Exception {
-		List<Rules> rule = mapRulesWrapperRule(rulesWrapper);
+		Date updatedTs = new Date();
+		List<Rules> rule = mapRulesWrapperRule(rulesWrapper, null, updatedTs);
 		ruleRepository.saveAll(rule);
 		return DataQualityContants.UPDATED;
 	}

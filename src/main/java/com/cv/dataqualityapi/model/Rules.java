@@ -1,5 +1,6 @@
 package com.cv.dataqualityapi.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -61,9 +64,29 @@ public class Rules {
 	@JsonIgnore
 	@OneToMany(mappedBy = "rules", cascade = CascadeType.ALL)
 	private Set<RuleRuleSet> ruleRuleSet;
+	
+	@Column(name = "created_ts")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdTs;
+	
+	@Column(name = "updated_ts")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedTs;
+	
+	@Column(name = "created_by", length = 100)
+	private String createdBy;
+	
+	@Column(name = "updated_by", length = 100)
+	private String updatedBy;
+
+	public Rules(Integer ruleId) {
+		super();
+		this.ruleId = ruleId;
+	}
 
 	public Rules(Integer ruleId, RulesType rulesType, String sourceName, String columnName, String attributes,
-			Clients clients) {
+			Clients clients, Set<RuleRuleSet> ruleRuleSet, Date createdTs, Date updatedTs, String createdBy,
+			String updatedBy) {
 		super();
 		this.ruleId = ruleId;
 		this.rulesType = rulesType;
@@ -71,13 +94,13 @@ public class Rules {
 		this.columnName = columnName;
 		this.attributes = attributes;
 		this.clients = clients;
+		this.ruleRuleSet = ruleRuleSet;
+		this.createdTs = createdTs;
+		this.updatedTs = updatedTs;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
 	}
 
-	public Rules(Integer ruleId) {
-		super();
-		this.ruleId = ruleId;
-	}
-	
 	
 
 }
