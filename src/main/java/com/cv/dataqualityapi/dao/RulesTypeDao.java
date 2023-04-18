@@ -8,5 +8,7 @@ public interface RulesTypeDao {
 
 	Boolean existsByTypeName(String typeName);
 
+	RulesType getRuleType(RulesType rulesType);
+
 
 }

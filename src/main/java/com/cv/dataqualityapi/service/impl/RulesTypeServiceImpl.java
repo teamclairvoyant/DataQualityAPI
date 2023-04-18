@@ -1,8 +1,13 @@
 package com.cv.dataqualityapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
@@ -13,13 +18,19 @@ import com.cv.dataqualityapi.utils.BusinessException;
 
 @Service
 public class RulesTypeServiceImpl implements RulesTypeService {
-	
+
 	@Autowired
 	private RulesTypeRepository rulesTypeRepository;
 
 	@Override
-	public String createRule(RulesType rulesType) throws Exception {
-		rulesTypeRepository.save(rulesType);
+	public String createRulesType(List<RulesType> rulesType) throws Exception {
+		for(RulesType ruleType : rulesType) {			
+			RulesType existingRuleType = rulesTypeRepository.getRuleType(ruleType);
+			if(existingRuleType != null) {
+				throw new BusinessException("The rule type already exists : " + existingRuleType);
+			}
+		}
+		rulesTypeRepository.saveAll(rulesType);
 		return "Rule Type Created";
 	}
 
@@ -45,5 +56,24 @@ public class RulesTypeServiceImpl implements RulesTypeService {
 			return DataQualityContants.UPDATED;
 		}
 		throw new BusinessException("Rules Type Ref doesnot Exists");
+	}
+
+	@Override
+	public List<RulesType> getAllRulesType(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+		Page<RulesType> pagedResult = rulesTypeRepository.findAll(paging);
+
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<RulesType>();
+		}
+	}
+
+	@Override
+	public List<RulesType> getRulesTypeByIds(List<Integer> ids) {
+		List<RulesType> findAllById = rulesTypeRepository.findAllById(ids);
+		return findAllById;
 	}
 }

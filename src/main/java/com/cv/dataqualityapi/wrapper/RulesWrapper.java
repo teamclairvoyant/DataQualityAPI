@@ -13,18 +13,28 @@ public class RulesWrapper {
 
 	private Integer ruleId;
 
-	private String attributes;
+//	private String attributes;
+
+	// present in the rule_type table
+	private String typeName;
+
+	// newly added
+	private String ruleDesc;
+
+	// newly added
+	private String tableName;
 
 	private String columnName;
+
+	// newly added
+	private String columnValue;
 
 	private String sourceName;
 
 //	private Integer clientId;
-	
+
 	private String clientName;
 
 //	private Integer rulesTypeId;
-	
-	private String typeName;
 
 }

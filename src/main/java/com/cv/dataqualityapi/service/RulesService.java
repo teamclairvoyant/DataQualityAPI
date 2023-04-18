@@ -15,4 +15,10 @@ public interface RulesService {
 
 	String updateRules(List<RulesWrapper> rulesWrapper) throws Exception;
 
+	List<Rules> getRulesByIds(List<Integer> ids);
+
+	List<Rules> getAllRules(Integer pageNo, Integer pageSize, String sortBy);
+
+	Boolean isRuleExists(RulesWrapper ruleWrapper);
+
 }

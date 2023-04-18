@@ -1,7 +1,10 @@
 package com.cv.dataqualityapi.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.service.RuleSetService;
 import com.cv.dataqualityapi.utils.BusinessException;
 import com.cv.dataqualityapi.wrapper.RuleRuleSetWrapper;
+import com.cv.dataqualityapi.wrapper.RuleSetRulesWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetWrapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +49,9 @@ public class RuleSetServiceImpl implements RuleSetService {
 		ArrayList<RuleSet> rulesetList = new ArrayList<>();
 		for (RuleSetWrapper ruleSetWrapper : ruleSetWrapperList) {
 			RuleSet ruleset = new RuleSet();
-			Boolean existsByRuleSetName = ruleSetRepository.existsByRuleSetName(ruleSetWrapper.getRulesetName());
-			if (existsByRuleSetName)
-				throw new BusinessException("The ruleset name already exists");
+			RuleSet isRuleSetExists = ruleSetRepository.isRuleSetExists(ruleSetWrapper);
+			if (isRuleSetExists != null)
+				throw new BusinessException("The ruleset already exists" + isRuleSetExists);
 
 			if (ruleSetWrapper.getRulesetId() != null)
 				ruleset.setRulesetId(ruleSetWrapper.getRulesetId());
@@ -117,13 +121,43 @@ public class RuleSetServiceImpl implements RuleSetService {
 	}
 
 	@Override
-	public List<Rules> getRulesByRuleSetId(Integer rulesetId) {
+	public List<RuleSetRulesWrapper> getRulesByRuleSetIds(List<Integer> rulesetId) {
+		log.trace("Ruleset Ids passed to getRulesByRuleSetId are : {}", rulesetId);
+		Map<Integer, List<Rules>> mapRuleIdWithRules = new HashMap<>();
 		List<RuleRuleSet> rulesByRuleSetId = ruleRuleSetRepository.getRulesByRuleSetId(rulesetId);
-		List<Rules> rules = new ArrayList<>();
-		for(RuleRuleSet rrs: rulesByRuleSetId) {
-			rules.add(rrs.getRules());
+		for (RuleRuleSet rrs : rulesByRuleSetId) {
+			if (mapRuleIdWithRules.containsKey(rrs.getRuleSet().getRulesetId())) {
+				mapRuleIdWithRules.get(rrs.getRuleSet().getRulesetId()).add(rrs.getRules());
+			} else {
+				List<Rules> rule = new ArrayList<>();
+				rule.add(rrs.getRules());
+				mapRuleIdWithRules.put(rrs.getRuleSet().getRulesetId(), rule);
+			}
 		}
-		return rules;
+		List<Integer> inputRulesetIds = new ArrayList<>();
+		inputRulesetIds.addAll(rulesetId);
+		List<Integer> rulesetPresent = new ArrayList<>();
+		rulesetPresent.addAll(mapRuleIdWithRules.keySet());
+		log.info("The ruleset present in the database are : {}", rulesetPresent);
+		inputRulesetIds.removeAll(rulesetPresent);
+		log.info("The ruleset not present in the database are : {}", inputRulesetIds);
+		if (inputRulesetIds.size() == 0)
+			return maptoWrapper(mapRuleIdWithRules);
+		for (Integer inputRulesetId : inputRulesetIds)
+			mapRuleIdWithRules.put(inputRulesetId, Collections.emptyList());
+		return maptoWrapper(mapRuleIdWithRules);
+	}
+
+	private List<RuleSetRulesWrapper> maptoWrapper(Map<Integer, List<Rules>> mapRuleIdWithRules) {
+		log.debug("Mapping map to RuleSetRulesWrapper");
+		List<RuleSetRulesWrapper> ruleSetRulesWrapperList = new ArrayList<>();
+		for (Integer key : mapRuleIdWithRules.keySet()) {
+			RuleSetRulesWrapper ruleSetRulesWrapper = new RuleSetRulesWrapper();
+			ruleSetRulesWrapper.setRulesetId(key);
+			ruleSetRulesWrapper.setRules(mapRuleIdWithRules.get(key));
+			ruleSetRulesWrapperList.add(ruleSetRulesWrapper);
+		}
+		return ruleSetRulesWrapperList;
 	}
 
 }

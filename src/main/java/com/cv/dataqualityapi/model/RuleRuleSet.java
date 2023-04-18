@@ -16,7 +16,7 @@ import lombok.ToString;
 
 
 @NamedQueries({
-	@NamedQuery(name = "RuleRuleSet.getRulesByRuleSetId", query = "SELECT r from RuleRuleSet r where r.ruleSet.rulesetId = :rulesetId")
+	@NamedQuery(name = "RuleRuleSet.getRulesByRuleSetId", query = "SELECT r from RuleRuleSet r where r.ruleSet.rulesetId in (:rulesetId)")
 	})
 
 @Getter
@@ -27,6 +27,7 @@ import lombok.ToString;
 @Table(name = "rule_ruleset")
 public class RuleRuleSet {
 	
+	@ToString.Exclude
 	@EmbeddedId
 	private RuleRuleSetKey id;
 	

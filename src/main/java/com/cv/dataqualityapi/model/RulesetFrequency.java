@@ -24,7 +24,7 @@ public class RulesetFrequency {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "freq_id")
+	@Column(name = "frequency_id")
 	private Integer freqId;
 
 	@OneToOne

@@ -1,6 +1,7 @@
 package com.cv.dataqualityapi.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.rest.RuleSetRest;
 import com.cv.dataqualityapi.service.RuleSetService;
 import com.cv.dataqualityapi.wrapper.RuleRuleSetWrapper;
+import com.cv.dataqualityapi.wrapper.RuleSetRulesWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetWrapper;
 
 @RestController
@@ -42,8 +44,8 @@ public class RuleSetRestImpl implements RuleSetRest {
 
 
 	@Override
-	public List<Rules> getRulesByRuleSetId(Integer rulesetId) throws Exception {
-		return ruleSetService.getRulesByRuleSetId(rulesetId);
+	public List<RuleSetRulesWrapper> getRulesByRuleSetIds(List<Integer> rulesetId) throws Exception {
+		return ruleSetService.getRulesByRuleSetIds(rulesetId);
 	}
 
 }

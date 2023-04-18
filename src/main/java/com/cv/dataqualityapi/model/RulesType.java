@@ -16,6 +16,7 @@ import lombok.ToString;
 
 
 @NamedQueries({
+	@NamedQuery(name = "RulesType.getRuleType", query = "SELECT rt from RulesType rt where upper(rt.typeName) = upper(:typeName) and upper(rt.ruleName) = upper(:ruleName)"),
 	@NamedQuery(name = "RulesType.getRuleTypeByTypeName", query = "SELECT rt from RulesType rt where upper(rt.typeName) = upper(:typeName)"),
 	@NamedQuery(name = "RulesType.getTypeCountByTypeName", query = "SELECT count(rt) from RulesType rt where upper(rt.typeName) = upper(:typeName)")
 	})
@@ -30,13 +31,13 @@ public class RulesType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "rule_type_id")
+	@Column(name = "ruletype_id")
 	private Integer ruleTypeId;
 
 	@Column(name = "type_name", nullable = false, length = 50)
 	private String typeName;
 
-	@Column(name = "rule_name", nullable = false, length = 50)
+	@Column(name = "rule_name", nullable = false, length = 50, unique = true)
 	private String ruleName;
 	
 	public RulesType(Integer ruleTypeId, String typeName, String ruleName) {

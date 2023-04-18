@@ -11,13 +11,13 @@ import com.cv.dataqualityapi.service.RulesTypeService;
 
 @RestController
 public class RulesTypeRestImpl implements RulesTypeRest {
-	
+
 	@Autowired
 	private RulesTypeService rulesTypeService;
 
 	@Override
-	public String createRulesType(RulesType rulesType) throws Exception {
-		return rulesTypeService.createRule(rulesType);
+	public String createRulesType(List<RulesType> rulesType) throws Exception {
+		return rulesTypeService.createRulesType(rulesType);
 	}
 
 	@Override
@@ -35,6 +35,14 @@ public class RulesTypeRestImpl implements RulesTypeRest {
 		return rulesTypeService.updateRulesType(rulesType);
 	}
 
+	@Override
+	public List<RulesType> getAllRulesType(Integer pageNo, Integer pageSize, String sortBy) {
+		return rulesTypeService.getAllRulesType(pageNo, pageSize, sortBy);
+	}
 
+	@Override
+	public List<RulesType> getRulesTypeByIds(List<Integer> ids) {
+		return rulesTypeService.getRulesTypeByIds(ids);
+	}
 
 }

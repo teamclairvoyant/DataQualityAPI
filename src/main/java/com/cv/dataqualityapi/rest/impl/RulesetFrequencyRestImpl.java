@@ -39,4 +39,15 @@ public class RulesetFrequencyRestImpl implements RulesetFrequencyRest{
 		return rulesetFrequencyService.updateRulesetFrequency(rulesetFrequency);
 	}
 
+	@Override
+	public List<RulesetFrequency> getAllRulesetFrequency(Integer pageNo, Integer pageSize, String sortBy) {
+		return rulesetFrequencyService.getAllRulesetFrequency(pageNo, pageSize, sortBy);
+	}
+
+	@Override
+	public List<RulesetFrequency> getRulesetFrequencyByIds(List<Integer> ids) {
+		log.debug("Going to get all the ruleset frequency of ids : {}", ids);
+		return rulesetFrequencyService.getRulesetFrequencyByIds(ids);
+	}
+
 }

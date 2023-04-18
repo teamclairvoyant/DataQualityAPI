@@ -7,6 +7,9 @@ import javax.persistence.TypedQuery;
 import com.cv.dataqualityapi.dao.ClientDao;
 import com.cv.dataqualityapi.model.Clients;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ClientDaoImpl implements ClientDao {
 
 	@PersistenceContext
@@ -33,7 +36,9 @@ public class ClientDaoImpl implements ClientDao {
 		TypedQuery<Long> createNamedQuery = entityManager.createNamedQuery("Clients.getClientCountByClientName",
 				Long.class);
 		createNamedQuery.setParameter("clientName", clientName);
-		return createNamedQuery.getSingleResult().intValue() > 0 ? true : false;
+		Long singleResult = createNamedQuery.getSingleResult();
+		log.info("Number of records are : {}", singleResult);
+		return singleResult.intValue() > 0 ? true : false;
 	}
 
 }

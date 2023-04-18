@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @NamedQueries({
 		@NamedQuery(name = "RuleSet.getRuleSetByRuleSetName", query = "SELECT rs from RuleSet rs where upper(rs.rulesetName) = upper(:rulesetName)"),
-		@NamedQuery(name = "RuleSet.getRuleSetCountByRuleSetName", query = "SELECT count(rs) from RuleSet rs where upper(rs.rulesetName) = upper(:rulesetName)") })
+		@NamedQuery(name = "RuleSet.getRuleSetCount", query = "SELECT rs from RuleSet rs where upper(rs.rulesetName) = upper(:rulesetName) and upper(rs.rulesetDesc) = upper(:rulesetDesc)") })
 
 @Getter
 @Setter

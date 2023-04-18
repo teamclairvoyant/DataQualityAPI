@@ -26,7 +26,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NamedQueries({
-		@NamedQuery(name = "Rules.getAllRulesPks", query = "SELECT new com.cv.dataqualityapi.model.Rules(r.ruleId) from Rules r")})
+		@NamedQuery(name = "Rules.getAllRulesPks", query = "SELECT new com.cv.dataqualityapi.model.Rules(r.ruleId) from Rules r"),
+		@NamedQuery(name = "Rules.getRuleCount", query = "SELECT count(r) from Rules r JOIN r.clients c JOIN r.rulesType rt where UPPER(rt.typeName) = UPPER(:typeName) and UPPER(r.ruleDesc) = UPPER(:ruleDesc) and UPPER(r.tableName) = UPPER(:tableName) and UPPER(r.columnName) = UPPER(columnName) and UPPER(r.columnValue) = UPPER(:columnValue) and UPPER(r.sourceName) = UPPER(sourceName) and UPPER(c.clientName) = UPPER(:clientName)"),
+		@NamedQuery(name = "Rules.getRules", query = "SELECT r from Rules r JOIN r.clients c JOIN r.rulesType rt where UPPER(rt.typeName) = UPPER(:typeName) and UPPER(r.ruleDesc) = UPPER(:ruleDesc) and UPPER(r.tableName) = UPPER(:tableName) and UPPER(r.columnName) = UPPER(:columnName) and UPPER(r.columnValue) = UPPER(:columnValue) and UPPER(r.sourceName) = UPPER(:sourceName) and UPPER(c.clientName) = UPPER(:clientName)") })
 
 @Getter
 @Setter
@@ -42,17 +44,29 @@ public class Rules {
 	private Integer ruleId;
 
 	@OneToOne
-	@JoinColumn(name = "rule_type_id", referencedColumnName = "rule_type_id")
+	@JoinColumn(name = "ruletype_id", referencedColumnName = "ruletype_id")
 	private RulesType rulesType;
 
-	@Column(name = "source_name", nullable = false, length = 50)
-	private String sourceName;
+	// newly added
+	@Column(name = "rule_desc", nullable = false, length = 100)
+	private String ruleDesc;
+
+	// newly added
+	@Column(name = "table_name", nullable = false, length = 50)
+	private String tableName;
 
 	@Column(name = "column_name", nullable = false, length = 50)
 	private String columnName;
 
-	@Column(name = "attributes", nullable = false, length = 50)
-	private String attributes;
+	// newly added
+	@Column(name = "column_value", nullable = false, length = 50)
+	private String columnValue;
+
+	@Column(name = "source_name", nullable = false, length = 50)
+	private String sourceName;
+
+//	@Column(name = "attributes", nullable = false, length = 50)
+//	private String attributes;
 
 //	@ManyToMany(mappedBy = "rules")
 //	private Set<RuleSet> ruleSet;
@@ -64,18 +78,18 @@ public class Rules {
 	@JsonIgnore
 	@OneToMany(mappedBy = "rules", cascade = CascadeType.ALL)
 	private Set<RuleRuleSet> ruleRuleSet;
-	
+
 	@Column(name = "created_ts")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdTs;
-	
+
 	@Column(name = "updated_ts")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedTs;
-	
+
 	@Column(name = "created_by", length = 100)
 	private String createdBy;
-	
+
 	@Column(name = "updated_by", length = 100)
 	private String updatedBy;
 
@@ -84,15 +98,17 @@ public class Rules {
 		this.ruleId = ruleId;
 	}
 
-	public Rules(Integer ruleId, RulesType rulesType, String sourceName, String columnName, String attributes,
-			Clients clients, Set<RuleRuleSet> ruleRuleSet, Date createdTs, Date updatedTs, String createdBy,
-			String updatedBy) {
+	public Rules(Integer ruleId, RulesType rulesType, String ruleDesc, String tableName, String columnName,
+			String columnValue, String sourceName, Clients clients, Set<RuleRuleSet> ruleRuleSet, Date createdTs,
+			Date updatedTs, String createdBy, String updatedBy) {
 		super();
 		this.ruleId = ruleId;
 		this.rulesType = rulesType;
-		this.sourceName = sourceName;
+		this.ruleDesc = ruleDesc;
+		this.tableName = tableName;
 		this.columnName = columnName;
-		this.attributes = attributes;
+		this.columnValue = columnValue;
+		this.sourceName = sourceName;
 		this.clients = clients;
 		this.ruleRuleSet = ruleRuleSet;
 		this.createdTs = createdTs;
@@ -100,7 +116,5 @@ public class Rules {
 		this.createdBy = createdBy;
 		this.updatedBy = updatedBy;
 	}
-
-	
 
 }

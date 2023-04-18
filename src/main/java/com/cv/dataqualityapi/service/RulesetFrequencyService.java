@@ -15,4 +15,8 @@ public interface RulesetFrequencyService {
 
 	String updateRulesetFrequency(List<RulesetFrequencyWrapper> rulesetFrequency) throws Exception;
 
+	List<RulesetFrequency> getAllRulesetFrequency(Integer pageNo, Integer pageSize, String sortBy);
+
+	List<RulesetFrequency> getRulesetFrequencyByIds(List<Integer> ids);
+
 }

@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
@@ -16,7 +20,10 @@ import com.cv.dataqualityapi.service.RulesService;
 import com.cv.dataqualityapi.utils.BusinessException;
 import com.cv.dataqualityapi.wrapper.RulesWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class RulesServiceImpl implements RulesService {
 
 	@Autowired
@@ -40,6 +47,14 @@ public class RulesServiceImpl implements RulesService {
 			throws Exception {
 		ArrayList<Rules> rulesList = new ArrayList<>();
 		for (RulesWrapper rulesWrapper : rulesWrapperList) {
+//			Boolean rulePresent = ruleRepository.isRulePresent(rulesWrapper);
+//			log.info("The rule status is : {}", rulePresent);
+			log.info("Here");
+			Rules getRules = ruleRepository.getRules(rulesWrapper);
+			log.info("The rule already present is : {}", getRules);
+			if (getRules != null && rulesWrapper.getRuleId() == null) {
+				throw new BusinessException("The rule is already present : " + rulesWrapper);
+			}
 			Rules rule = new Rules();
 			if (rulesWrapper.getRuleId() != null) {
 				rule.setRuleId(rulesWrapper.getRuleId());
@@ -54,9 +69,12 @@ public class RulesServiceImpl implements RulesService {
 			}
 			boolean existsByClientName = clientRepository.existsByClientName(rulesWrapper.getClientName());
 			boolean existsByTypeName = rulesTypeRepository.existsByTypeName(rulesWrapper.getTypeName());
-			if (!existsByClientName & !existsByTypeName)
-				throw new BusinessException("client or rule set not present");
-			rule.setAttributes(rulesWrapper.getAttributes());
+			if (!existsByClientName || !existsByTypeName)
+				throw new BusinessException("client or rule type not present");
+//			rule.setAttributes(rulesWrapper.getAttributes());
+			rule.setRuleDesc(rulesWrapper.getRuleDesc());
+			rule.setTableName(rulesWrapper.getTableName());
+			rule.setColumnValue(rulesWrapper.getColumnValue());
 			rule.setClients(clientRepository.getClientByClientName(rulesWrapper.getClientName()));
 			rule.setColumnName(rulesWrapper.getColumnName());
 			rule.setSourceName(rulesWrapper.getSourceName());
@@ -83,6 +101,33 @@ public class RulesServiceImpl implements RulesService {
 		List<Rules> rule = mapRulesWrapperRule(rulesWrapper, null, updatedTs);
 		ruleRepository.saveAll(rule);
 		return DataQualityContants.UPDATED;
+	}
+
+	@Override
+	public List<Rules> getRulesByIds(List<Integer> ids) {
+		List<Rules> findAllById = ruleRepository.findAllById(ids);
+		return findAllById;
+	}
+
+	@Override
+	public List<Rules> getAllRules(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+		Page<Rules> pagedResult = ruleRepository.findAll(paging);
+
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Rules>();
+		}
+	}
+
+	@Override
+	public Boolean isRuleExists(RulesWrapper ruleWrapper) {
+		Rules rules = ruleRepository.getRules(ruleWrapper);
+		if(rules != null)
+			return Boolean.TRUE;
+		return Boolean.FALSE;
 	}
 
 }

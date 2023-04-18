@@ -15,7 +15,7 @@ public class RuleRuleSetDaoImpl implements RuleRuleSetDao {
 	private EntityManager entityManager;
 	
 	@Override
-	public List<RuleRuleSet> getRulesByRuleSetId(Integer rulesetId) {
+	public List<RuleRuleSet> getRulesByRuleSetId(List<Integer> rulesetId) {
 		TypedQuery<RuleRuleSet> createNamedQuery = entityManager.createNamedQuery("RuleRuleSet.getRulesByRuleSetId", RuleRuleSet.class);
 		createNamedQuery.setParameter("rulesetId", rulesetId);
 		return createNamedQuery.getResultList();

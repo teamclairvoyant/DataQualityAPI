@@ -1,8 +1,13 @@
 package com.cv.dataqualityapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
@@ -51,6 +56,25 @@ public class ClientServiceImpl implements ClientService {
 			return DataQualityContants.UPDATED;
 		}
 		throw new BusinessException("Client Ref doesnot Exists");
+	}
+
+	@Override
+	public List<Clients> getAllClients(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+		Page<Clients> pagedResult = clientRepository.findAll(paging);
+
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Clients>();
+		}
+	}
+
+	@Override
+	public List<Clients> getClientsByIds(List<Integer> ids) {
+		List<Clients> findAllById = clientRepository.findAllById(ids);
+		return findAllById;
 	}
 
 }

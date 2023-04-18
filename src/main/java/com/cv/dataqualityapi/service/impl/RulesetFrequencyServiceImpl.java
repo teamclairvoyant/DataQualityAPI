@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
 import com.cv.dataqualityapi.dao.RuleSetRepository;
 import com.cv.dataqualityapi.dao.RulesetFrequencyRepository;
+import com.cv.dataqualityapi.model.RuleSet;
 import com.cv.dataqualityapi.model.RulesetFrequency;
 import com.cv.dataqualityapi.service.RulesetFrequencyService;
 import com.cv.dataqualityapi.utils.BusinessException;
@@ -43,10 +48,10 @@ public class RulesetFrequencyServiceImpl implements RulesetFrequencyService {
 			if (rulesetFrequencyWrapper.getFreqId() != null)
 				rulesetFrequency.setFreqId(rulesetFrequencyWrapper.getFreqId());
 
-			Boolean existsByRuleSetName = ruleSetRepository
-					.existsByRuleSetName(rulesetFrequencyWrapper.getRuleSetName());
-			if (!existsByRuleSetName)
-				throw new BusinessException("Rule set not present");
+			RuleSet existsByRuleSetName = ruleSetRepository
+					.getRuleSetByRuleSetName(rulesetFrequencyWrapper.getRuleSetName());
+			if (existsByRuleSetName == null)
+				throw new BusinessException("Rule set is not present");
 
 			rulesetFrequency.setFrequency(rulesetFrequencyWrapper.getFrequency());
 
@@ -63,11 +68,30 @@ public class RulesetFrequencyServiceImpl implements RulesetFrequencyService {
 		rulesetFrequencyRepository.deleteAllById(freqIds);
 		return DataQualityContants.DELETED;
 	}
-	
+
 	@Override
 	public String updateRulesetFrequency(List<RulesetFrequencyWrapper> rulesetFrequency) throws Exception {
 		List<RulesetFrequency> mapRulesetFreqWrapperRulesetFreq = mapRulesetFreqWrapperRulesetFreq(rulesetFrequency);
 		rulesetFrequencyRepository.saveAll(mapRulesetFreqWrapperRulesetFreq);
 		return DataQualityContants.UPDATED;
+	}
+
+	@Override
+	public List<RulesetFrequency> getAllRulesetFrequency(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+		Page<RulesetFrequency> pagedResult = rulesetFrequencyRepository.findAll(paging);
+
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<RulesetFrequency>();
+		}
+	}
+
+	@Override
+	public List<RulesetFrequency> getRulesetFrequencyByIds(List<Integer> ids) {
+		List<RulesetFrequency> findAllById = rulesetFrequencyRepository.findAllById(ids);
+		return findAllById;
 	}
 }

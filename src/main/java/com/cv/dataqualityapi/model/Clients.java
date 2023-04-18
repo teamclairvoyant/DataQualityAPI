@@ -19,6 +19,8 @@ import lombok.ToString;
 		@NamedQuery(name = "Clients.getClientCountByClientName", query = "SELECT count(c) from Clients c where upper(c.clientName) = upper(:clientName)")
 		})
 
+
+//@ApiModel(subTypes = {BalanceUpdate.class, UserMessage.class})
 @Getter
 @Setter
 @NoArgsConstructor

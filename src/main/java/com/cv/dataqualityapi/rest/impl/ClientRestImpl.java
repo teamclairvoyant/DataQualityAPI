@@ -14,19 +14,18 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @Log4j2
 public class ClientRestImpl implements ClientRest {
-	
+
 	@Autowired
 	private ClientService clientService;
 
-	
 	@Override
 	public List<Clients> getClients() {
 		return clientService.getClients();
 	}
-	
+
 	@Override
 	public String insertClients(Clients clients) throws Exception {
-		log.info("Test Logger");
+		log.info("Test Logger : {}", clients);
 		return clientService.insertClients(clients);
 	}
 
@@ -34,11 +33,22 @@ public class ClientRestImpl implements ClientRest {
 	public String deleteClients(Clients clients) throws Exception {
 		return clientService.deleteClients(clients);
 	}
-	
+
 	@Override
 	public String updateClients(Clients clients) throws Exception {
 		log.info("Test Logger", clients);
 		return clientService.updateClients(clients);
+	}
+
+	@Override
+	public List<Clients> getAllClients(Integer pageNo, Integer pageSize, String sortBy) {
+		return clientService.getAllClients(pageNo, pageSize, sortBy);
+	}
+	
+	@Override
+	public List<Clients> getClientsByIds(List<Integer> ids) {
+		log.debug("Going to get all the Clients of ids : {}", ids);
+		return clientService.getClientsByIds(ids);
 	}
 
 }

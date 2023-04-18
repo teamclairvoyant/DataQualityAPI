@@ -1,11 +1,13 @@
 package com.cv.dataqualityapi.dao;
 
 import com.cv.dataqualityapi.model.RuleSet;
+import com.cv.dataqualityapi.wrapper.RuleSetWrapper;
 
 public interface RuleSetDao {
 	
-	Boolean existsByRuleSetName(String clientName);
-
 	RuleSet getRuleSetByRuleSetName(String ruleSetName);
+
+	RuleSet isRuleSetExists(RuleSetWrapper ruleSetWrapper);
+
 
 }
