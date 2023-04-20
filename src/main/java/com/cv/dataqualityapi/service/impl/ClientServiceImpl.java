@@ -41,7 +41,8 @@ public class ClientServiceImpl implements ClientService {
 	public String deleteClients(Clients clients) throws Exception {
 		Integer getClientCountByClientName = clientRepository.getClientCountByClientName(clients.getClientName());
 		if (getClientCountByClientName > 0) {
-			clientRepository.delete(clients);
+			Clients client = clientRepository.getClientByClientName(clients.getClientName());
+			clientRepository.delete(client);
 			return DataQualityContants.DELETED;
 		}
 		throw new BusinessException("Cannot delete client because it does not exists");
