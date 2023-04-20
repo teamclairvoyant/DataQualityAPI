@@ -30,7 +30,8 @@ public interface RulesRest {
 
 	@ApiOperation(value = "Create Rules", notes = "Returns saved message after successfull insertion", response = String.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
-			@ApiResponse(code = 404, message = "Not found - The url was not found") })
+			@ApiResponse(code = 404, message = "Not found - The url was not found"),
+			@ApiResponse(code = 406, message = "Not Acceptable")})
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "ruleWrapper", allowMultiple = true, dataTypeClass = RulesWrapper.class, value = "The body is a json", paramType = "body", required = true) })
 	@PostMapping(value = "createRules")

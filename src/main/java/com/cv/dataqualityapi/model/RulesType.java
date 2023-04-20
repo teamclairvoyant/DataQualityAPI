@@ -9,6 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +23,7 @@ import lombok.ToString;
 	@NamedQuery(name = "RulesType.getTypeCountByTypeName", query = "SELECT count(rt) from RulesType rt where upper(rt.typeName) = upper(:typeName)")
 	})
 
+@ApiModel
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,13 +34,16 @@ public class RulesType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(notes = "Rule Type ID", example = "1", required = true) 
 	@Column(name = "ruletype_id")
 	private Integer ruleTypeId;
 
 	@Column(name = "type_name", nullable = false, length = 50)
+	@ApiModelProperty(notes = "Type Name", example = "Some type name", required = false) 
 	private String typeName;
 
 	@Column(name = "rule_name", nullable = false, length = 50, unique = true)
+	@ApiModelProperty(notes = "Rule Name", example = "Some rule name", required = false) 
 	private String ruleName;
 	
 	public RulesType(Integer ruleTypeId, String typeName, String ruleName) {

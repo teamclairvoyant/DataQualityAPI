@@ -9,6 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +23,7 @@ import lombok.ToString;
 
 
 //@ApiModel(subTypes = {BalanceUpdate.class, UserMessage.class})
+@ApiModel
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,10 +34,12 @@ public class Clients {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(notes = "Client ID", example = "1", required = true) 
 	@Column(name = "client_id")
 	private Integer clientId;
 
 	@Column(name = "client_name", nullable = false, length = 100)
+	@ApiModelProperty(notes = "Client name", example = "Clairvoyant", required = false) 
 	private String clientName;
 	
 	public Clients(Integer clientId, String clientName) {
