@@ -2,6 +2,7 @@ package com.cv.dataqualityapi.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,9 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
 import com.cv.dataqualityapi.dao.RulesTypeRepository;
+import com.cv.dataqualityapi.dto.CreateRuleTypeDto;
+import com.cv.dataqualityapi.exception.BusinessException;
+import com.cv.dataqualityapi.exception.ResourceNotFoundException;
 import com.cv.dataqualityapi.model.RulesType;
 import com.cv.dataqualityapi.service.RulesTypeService;
-import com.cv.dataqualityapi.utils.BusinessException;
+import com.cv.dataqualityapi.utils.DTOUtils;
 
 @Service
 public class RulesTypeServiceImpl implements RulesTypeService {
@@ -23,14 +27,21 @@ public class RulesTypeServiceImpl implements RulesTypeService {
 	private RulesTypeRepository rulesTypeRepository;
 
 	@Override
-	public String createRulesType(List<RulesType> rulesType) throws Exception {
-		for(RulesType ruleType : rulesType) {			
-			RulesType existingRuleType = rulesTypeRepository.getRuleType(ruleType);
-			if(existingRuleType != null) {
-				throw new BusinessException("The rule type already exists : " + existingRuleType);
+	public String createRulesType(List<CreateRuleTypeDto> createRuleTypeDto) throws Exception {
+		List<RulesType> ruleTypes = new ArrayList<>();
+		for (CreateRuleTypeDto ruleType : createRuleTypeDto) {
+			Optional<RulesType> existingRuleType = rulesTypeRepository.findByTypeName(ruleType.getTypeName());
+			if (existingRuleType.isPresent()) {
+				throw new BusinessException("The rule type already exists with name: " + ruleType.getTypeName());
 			}
+			RulesType type = new RulesType();
+			
+			DTOUtils.copyPropertiesIgnoringNull(ruleType, type);
+			
+			ruleTypes.add(type);
+			
 		}
-		rulesTypeRepository.saveAll(rulesType);
+		rulesTypeRepository.saveAll(ruleTypes);
 		return "Rule Type Created";
 	}
 
@@ -75,5 +86,14 @@ public class RulesTypeServiceImpl implements RulesTypeService {
 	public List<RulesType> getRulesTypeByIds(List<Integer> ids) {
 		List<RulesType> findAllById = rulesTypeRepository.findAllById(ids);
 		return findAllById;
+	}
+
+	@Override
+	public RulesType findByTypeName(String typeName) {
+		Optional<RulesType> rulesTypeOp = rulesTypeRepository.findByTypeName(typeName);
+		if (rulesTypeOp.isEmpty())
+			throw new ResourceNotFoundException("rule type not present");
+
+		return rulesTypeOp.get();
 	}
 }

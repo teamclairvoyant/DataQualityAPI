@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RequestMapping("/RulesetFrequency")
+@RequestMapping("/ruleset-frequency")
 public interface RulesetFrequencyRest {
 
 	@ApiOperation(value = "Get all the RulesetFrequency", notes = "No input params are required", response = RulesetFrequency.class, responseContainer = "List")

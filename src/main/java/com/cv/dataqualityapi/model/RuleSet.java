@@ -8,12 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "ruleset")
@@ -42,35 +48,18 @@ public class RuleSet {
 	@Column(name = "ruleset_desc", nullable = false, length = 200)
 	private String rulesetDesc;
 
-//	@ManyToMany
-//	@JoinTable(name = "rule_ruleset", joinColumns = @JoinColumn(name = "ruleset_id"), inverseJoinColumns = @JoinColumn(name = "rule_id"))
-//	private Set<Rules> rules;
+	@ManyToMany(mappedBy = "ruleSet")	
+	@JsonBackReference
+	private Set<Rules> rules;
 
 //	present as fk in RulesetFrequency
 	@OneToOne(mappedBy = "ruleSet")
 	private RulesetFrequency rulesetFrequency;
 
-	@OneToMany(mappedBy = "ruleSet", cascade = CascadeType.ALL)
-	private Set<RuleRuleSet> ruleRuleSet;
+	/*
+	 * @OneToMany(mappedBy = "ruleSet", cascade = CascadeType.ALL) private
+	 * Set<RuleRuleSet> ruleRuleSet;
+	 */
 
-//	public RuleSet(Integer rulesetId, String rulesetName, String rulesetDesc, Set<Rules> rules,
-//			RulesetFrequency rulesetFrequency) {
-//		super();
-//		this.rulesetId = rulesetId;
-//		this.rulesetName = rulesetName;
-//		this.rulesetDesc = rulesetDesc;
-////		this.rules = rules;
-//		this.rulesetFrequency = rulesetFrequency;
-//	}
-
-	public RuleSet(Integer rulesetId, String rulesetName, String rulesetDesc, RulesetFrequency rulesetFrequency,
-			Set<RuleRuleSet> ruleRuleSet) {
-		super();
-		this.rulesetId = rulesetId;
-		this.rulesetName = rulesetName;
-		this.rulesetDesc = rulesetDesc;
-		this.rulesetFrequency = rulesetFrequency;
-		this.ruleRuleSet = ruleRuleSet;
-	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,15 @@ import com.cv.dataqualityapi.constants.DataQualityContants;
 import com.cv.dataqualityapi.dao.RuleRuleSetRepository;
 import com.cv.dataqualityapi.dao.RuleSetRepository;
 import com.cv.dataqualityapi.dao.RulesRepository;
+import com.cv.dataqualityapi.dto.CreateRuleSetDto;
+import com.cv.dataqualityapi.exception.BusinessException;
+import com.cv.dataqualityapi.exception.ResourceNotFoundException;
 import com.cv.dataqualityapi.model.RuleRuleSet;
 import com.cv.dataqualityapi.model.RuleRuleSetKey;
 import com.cv.dataqualityapi.model.RuleSet;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.service.RuleSetService;
-import com.cv.dataqualityapi.utils.BusinessException;
+import com.cv.dataqualityapi.utils.DTOUtils;
 import com.cv.dataqualityapi.wrapper.RuleRuleSetWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetRulesWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetWrapper;
@@ -39,24 +43,32 @@ public class RuleSetServiceImpl implements RuleSetService {
 	private RulesRepository rulesRepository;
 
 	@Override
-	public String createRuleSet(List<RuleSetWrapper> ruleSetWrapper) throws Exception {
-		List<RuleSet> mapRuleseWrapperRuleset = mapRuleseWrapperRuleset(ruleSetWrapper);
+	public String createRuleSet(List<CreateRuleSetDto> createRuleSetDto) throws Exception {
+		List<RuleSet> mapRuleseWrapperRuleset = mapRuleseWrapperRuleset(createRuleSetDto);
 		ruleSetRepository.saveAll(mapRuleseWrapperRuleset);
 		return DataQualityContants.SAVED;
 	}
 
-	private List<RuleSet> mapRuleseWrapperRuleset(List<RuleSetWrapper> ruleSetWrapperList) throws Exception {
+	private List<RuleSet> mapRuleseWrapperRuleset(List<CreateRuleSetDto> createRuleSetDtoList) throws Exception {
 		ArrayList<RuleSet> rulesetList = new ArrayList<>();
-		for (RuleSetWrapper ruleSetWrapper : ruleSetWrapperList) {
+		for (CreateRuleSetDto ruleSetDto : createRuleSetDtoList) {
 			RuleSet ruleset = new RuleSet();
-			RuleSet isRuleSetExists = ruleSetRepository.isRuleSetExists(ruleSetWrapper);
-			if (isRuleSetExists != null)
-				throw new BusinessException("The ruleset already exists" + isRuleSetExists);
 
-			if (ruleSetWrapper.getRulesetId() != null)
-				ruleset.setRulesetId(ruleSetWrapper.getRulesetId());
-			ruleset.setRulesetName(ruleSetWrapper.getRulesetName());
-			ruleset.setRulesetDesc(ruleSetWrapper.getRulesetDesc());
+			boolean isRuleSetExists = ruleSetRepository.existsByRulesetName(ruleSetDto.getRulesetName());
+			if (isRuleSetExists) {
+				throw new BusinessException("The ruleset already exists with name:" + ruleSetDto.getRulesetName());
+			}
+
+			/*
+			 * RuleSet isRuleSetExists = ruleSetRepository.isRuleSetExists(ruleSetWrapper);
+			 * if (isRuleSetExists != null) throw new
+			 * BusinessException("The ruleset already exists" + isRuleSetExists);
+			 * 
+			 * if (ruleSetWrapper.getRulesetId() != null)
+			 * ruleset.setRulesetId(ruleSetWrapper.getRulesetId());
+			 */
+
+			DTOUtils.copyPropertiesIgnoringNull(ruleSetDto, ruleset);
 			rulesetList.add(ruleset);
 		}
 		return rulesetList;
@@ -158,6 +170,15 @@ public class RuleSetServiceImpl implements RuleSetService {
 			ruleSetRulesWrapperList.add(ruleSetRulesWrapper);
 		}
 		return ruleSetRulesWrapperList;
+	}
+
+	@Override
+	public RuleSet findByRulesetName(String rulesetName) {
+		Optional<RuleSet> ruleSetOp = ruleSetRepository.findByRulesetName(rulesetName);
+		if (ruleSetOp.isEmpty())
+			throw new ResourceNotFoundException("rule set not present");
+
+		return ruleSetOp.get();
 	}
 
 }

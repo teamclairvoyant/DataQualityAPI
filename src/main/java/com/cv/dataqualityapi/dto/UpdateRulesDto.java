@@ -1,16 +1,15 @@
+package com.cv.dataqualityapi.dto;
 
-package com.cv.dataqualityapi.wrapper;
+import java.util.Properties;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class RulesWrapper {
+public class UpdateRulesDto {
 
 	private Integer ruleId;
 
@@ -22,8 +21,7 @@ public class RulesWrapper {
 
 	private String entityTable;
 
-	private String properties;
+	private Properties properties;
 
 	private String ruleSet;
-
 }

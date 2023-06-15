@@ -1,16 +1,15 @@
 package com.cv.dataqualityapi.service;
 
 import java.util.List;
-import java.util.Map;
 
-import com.cv.dataqualityapi.model.Rules;
+import com.cv.dataqualityapi.dto.CreateRuleSetDto;
+import com.cv.dataqualityapi.model.RuleSet;
 import com.cv.dataqualityapi.wrapper.RuleRuleSetWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetRulesWrapper;
-import com.cv.dataqualityapi.wrapper.RuleSetWrapper;
 
 public interface RuleSetService {
 
-	String createRuleSet(List<RuleSetWrapper> ruleSetWrapper) throws Exception;
+	String createRuleSet(List<CreateRuleSetDto> ruleSetDto) throws Exception;
 
 	String deleteRuleSet(List<Integer> ruleSet);
 
@@ -20,5 +19,6 @@ public interface RuleSetService {
 
 	List<RuleSetRulesWrapper> getRulesByRuleSetIds(List<Integer> rulesetId);
 
+	RuleSet findByRulesetName(String rulesetName);
 
 }

@@ -3,7 +3,6 @@ package com.cv.dataqualityapi.service;
 import java.util.List;
 
 import com.cv.dataqualityapi.model.Clients;
-import com.cv.dataqualityapi.model.Rules;
 
 public interface ClientService {
 	

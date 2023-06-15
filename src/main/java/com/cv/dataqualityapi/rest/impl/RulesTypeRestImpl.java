@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cv.dataqualityapi.dto.CreateRuleTypeDto;
 import com.cv.dataqualityapi.model.RulesType;
 import com.cv.dataqualityapi.rest.RulesTypeRest;
 import com.cv.dataqualityapi.service.RulesTypeService;
@@ -16,8 +17,8 @@ public class RulesTypeRestImpl implements RulesTypeRest {
 	private RulesTypeService rulesTypeService;
 
 	@Override
-	public String createRulesType(List<RulesType> rulesType) throws Exception {
-		return rulesTypeService.createRulesType(rulesType);
+	public String createRulesType(List<CreateRuleTypeDto> createRuleTypeDto) throws Exception {
+		return rulesTypeService.createRulesType(createRuleTypeDto);
 	}
 
 	@Override
