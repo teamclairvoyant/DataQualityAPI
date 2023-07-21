@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cv.dataqualityapi.dto.CreateRuleSetDto;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.rest.RuleSetRest;
 import com.cv.dataqualityapi.service.RuleSetService;
@@ -20,8 +22,8 @@ public class RuleSetRestImpl implements RuleSetRest {
 	private RuleSetService ruleSetService;
 	
 	@Override
-	public String createRuleSet(List<RuleSetWrapper> ruleSetWrapper) throws Exception {
-		return ruleSetService.createRuleSet(ruleSetWrapper);
+	public String createRuleSet(List<CreateRuleSetDto> createRuleSetDto) throws Exception {
+		return ruleSetService.createRuleSet(createRuleSetDto);
 	}
 	
 	

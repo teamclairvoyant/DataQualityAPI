@@ -34,7 +34,9 @@ public class RulesTypeDaoImpl implements RulesTypeDao {
 		TypedQuery<RulesType> createNamedQuery = entityManager.createNamedQuery("RulesType.getRuleTypeByTypeName",
 				RulesType.class);
 		createNamedQuery.setParameter("typeName", typeName);
-		return createNamedQuery.getSingleResult();
+		RulesType result =  createNamedQuery.getSingleResult();
+		
+		return result;
 	}
 
 	@Override

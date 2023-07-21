@@ -2,6 +2,7 @@ package com.cv.dataqualityapi.dao;
 
 import java.util.List;
 
+import com.cv.dataqualityapi.dto.CreateRulesDto;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.wrapper.RulesWrapper;
 
@@ -11,6 +12,6 @@ public interface RulesDao{
 	
 	Boolean isRulePresent(RulesWrapper rulesWrapper);
 
-	Rules getRules(RulesWrapper rulesWrapper);
+	Rules getRules(CreateRulesDto rulesDto);
 
 }

@@ -3,11 +3,11 @@ package com.cv.dataqualityapi.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.cv.dataqualityapi.dao.RulesDao;
+import com.cv.dataqualityapi.dto.CreateRulesDto;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.wrapper.RulesWrapper;
 
@@ -30,7 +30,7 @@ public class RulesDaoImpl implements RulesDao {
 	// UPPER(c.clientName) = UPPER(:clientName)
 	@Override
 	public Boolean isRulePresent(RulesWrapper rulesWrapper) {
-		TypedQuery<Long> createNamedQuery = entityManager.createNamedQuery("Rules.getRuleCount", Long.class);
+		/*TypedQuery<Long> createNamedQuery = entityManager.createNamedQuery("Rules.getRuleCount", Long.class);
 //		createNamedQuery.setParameter("ruleId", rulesWrapper.getRuleId());
 		createNamedQuery.setParameter("typeName", rulesWrapper.getTypeName());
 		createNamedQuery.setParameter("ruleDesc", rulesWrapper.getRuleDesc());
@@ -39,24 +39,29 @@ public class RulesDaoImpl implements RulesDao {
 		createNamedQuery.setParameter("columnValue", rulesWrapper.getColumnValue());
 		createNamedQuery.setParameter("sourceName", rulesWrapper.getSourceName());
 		createNamedQuery.setParameter("clientName", rulesWrapper.getClientName());
-		return createNamedQuery.getSingleResult().intValue() > 0 ? true : false;
+		return createNamedQuery.getSingleResult().intValue() > 0 ? true : false;*/
+		return null;
 	}
 
 	@Override
-	public Rules getRules(RulesWrapper rulesWrapper) {
-		TypedQuery<Rules> createNamedQuery = entityManager.createNamedQuery("Rules.getRules", Rules.class);
-		createNamedQuery.setParameter("typeName", rulesWrapper.getTypeName());
-		createNamedQuery.setParameter("ruleDesc", rulesWrapper.getRuleDesc());
-		createNamedQuery.setParameter("tableName", rulesWrapper.getTableName());
-		createNamedQuery.setParameter("columnName", rulesWrapper.getColumnName());
-		createNamedQuery.setParameter("columnValue", rulesWrapper.getColumnValue());
-		createNamedQuery.setParameter("sourceName", rulesWrapper.getSourceName());
-		createNamedQuery.setParameter("clientName", rulesWrapper.getClientName());
-		try {
-			return createNamedQuery.getSingleResult();
-		} catch (NoResultException nre) {
-			return null;
-		}
+	public Rules getRules(CreateRulesDto rulesDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	/*
+	 * @Override public Rules getRules(RulesWrapper rulesWrapper) {
+	 * TypedQuery<Rules> createNamedQuery =
+	 * entityManager.createNamedQuery("Rules.getRules", Rules.class);
+	 * createNamedQuery.setParameter("typeName", rulesWrapper.getTypeName());
+	 * createNamedQuery.setParameter("ruleDesc", rulesWrapper.getRuleDesc());
+	 * createNamedQuery.setParameter("tableName", rulesWrapper.getTableName());
+	 * createNamedQuery.setParameter("columnName", rulesWrapper.getColumnName());
+	 * createNamedQuery.setParameter("columnValue", rulesWrapper.getColumnValue());
+	 * createNamedQuery.setParameter("sourceName", rulesWrapper.getSourceName());
+	 * createNamedQuery.setParameter("clientName", rulesWrapper.getClientName());
+	 * try { return createNamedQuery.getSingleResult(); } catch (NoResultException
+	 * nre) { return null; } }
+	 */
 
 }

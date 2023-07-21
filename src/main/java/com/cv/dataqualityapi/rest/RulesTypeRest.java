@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cv.dataqualityapi.dto.CreateRuleTypeDto;
 import com.cv.dataqualityapi.model.RulesType;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,16 +17,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RequestMapping("/RulesType")
+@RequestMapping("/rules-type")
 public interface RulesTypeRest {
 
 	@ApiOperation(value = "Create RulesType", notes = "Returns saved message after successfull insertion", response = String.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
 			@ApiResponse(code = 404, message = "Not found - The url was not found") })
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "rulesType", allowMultiple = true, dataTypeClass = RulesType.class, value = "The body is a json", paramType = "body", required = true) })
+			@ApiImplicitParam(name = "rulesType", allowMultiple = true, dataTypeClass = CreateRuleTypeDto.class, value = "The body is a json", paramType = "body", required = true) })
 	@PostMapping(value = "createRulesType")
-	public String createRulesType(@RequestBody List<RulesType> rulesType) throws Exception;
+	public String createRulesType(@RequestBody List<CreateRuleTypeDto> createRuleTypeDto) throws Exception;
 
 	@ApiOperation(value = "Get all the Clients", notes = "No input params are required", response = RulesType.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Getting list of Clients"),
@@ -37,7 +38,7 @@ public interface RulesTypeRest {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
 			@ApiResponse(code = 404, message = "Not found - The url was not found") })
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "rulesType", allowMultiple = true, dataTypeClass = RulesType.class, value = "The body is a json", paramType = "body", required = true) })
+			@ApiImplicitParam(name = "rulesType", dataTypeClass = RulesType.class, value = "The body is a json", paramType = "body", required = true) })
 	@PostMapping(value = "deleteRulesType")
 	public String deleteRulesType(@RequestBody RulesType rulesType) throws Exception;
 

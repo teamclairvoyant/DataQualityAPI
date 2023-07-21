@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cv.dataqualityapi.dto.CreateRulesDto;
+import com.cv.dataqualityapi.dto.JsonResponseDto;
+import com.cv.dataqualityapi.dto.UpdateRulesDto;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.rest.RulesRest;
 import com.cv.dataqualityapi.service.RulesService;
-import com.cv.dataqualityapi.wrapper.RulesWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,14 +23,15 @@ public class RulesRestImpl implements RulesRest {
 	private RulesService ruleService;
 
 	@Override
-	public String createRule(RulesWrapper ruleWrapper) throws Exception {
-		log.debug("The input parameter for creating the Rule is : {}", ruleWrapper);
-		ArrayList<RulesWrapper> ruleWrapperList = new ArrayList<>();
+	public String createRule(CreateRulesDto ruleDto) throws Exception {
+		log.debug("The input parameter for creating the Rule is : {}", ruleDto);
+		ArrayList<CreateRulesDto> ruleWrapperList = new ArrayList<>();
+		ruleWrapperList.add(ruleDto);
 		return ruleService.createRules(ruleWrapperList);
 	}
 
 	@Override
-	public String createRules(List<RulesWrapper> ruleWrapper) throws Exception {
+	public String createRules(List<CreateRulesDto> ruleWrapper) throws Exception {
 		log.debug("The input parameter for creating the Rules are : {}", ruleWrapper);
 		return ruleService.createRules(ruleWrapper);
 	}
@@ -46,9 +49,9 @@ public class RulesRestImpl implements RulesRest {
 	}
 
 	@Override
-	public String updateRules(List<RulesWrapper> ruleWrapper) throws Exception {
-		log.debug("The input parameter for updating the Rules are : {}", ruleWrapper);
-		return ruleService.updateRules(ruleWrapper);
+	public String updateRules(List<UpdateRulesDto> rulesDto) throws Exception {
+		log.debug("The input parameter for updating the Rules are : {}", rulesDto);
+		return ruleService.updateRules(rulesDto);
 	}
 
 	@Override
@@ -59,12 +62,12 @@ public class RulesRestImpl implements RulesRest {
 
 	@Override
 	public List<Rules> getAllRules(Integer pageNo, Integer pageSize, String sortBy) {
-		return ruleService.getAllRules(pageNo, pageSize, sortBy);
+		List<Rules> ruleList  = ruleService.getAllRules(pageNo, pageSize, sortBy);
+	    return ruleList;
 	}
 
 	@Override
-	public Boolean isRuleExists(RulesWrapper ruleWrapper) {
-		return ruleService.isRuleExists(ruleWrapper);
+	public Boolean isRuleExists(CreateRulesDto ruleDto) {
+		return ruleService.isRuleExists(ruleDto);
 	}
-
 }

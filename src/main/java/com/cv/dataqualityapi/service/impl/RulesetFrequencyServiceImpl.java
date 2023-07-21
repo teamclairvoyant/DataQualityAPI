@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import com.cv.dataqualityapi.constants.DataQualityContants;
 import com.cv.dataqualityapi.dao.RuleSetRepository;
 import com.cv.dataqualityapi.dao.RulesetFrequencyRepository;
+import com.cv.dataqualityapi.exception.BusinessException;
 import com.cv.dataqualityapi.model.RuleSet;
 import com.cv.dataqualityapi.model.RulesetFrequency;
 import com.cv.dataqualityapi.service.RulesetFrequencyService;
-import com.cv.dataqualityapi.utils.BusinessException;
 import com.cv.dataqualityapi.wrapper.RulesetFrequencyWrapper;
 
 @Service

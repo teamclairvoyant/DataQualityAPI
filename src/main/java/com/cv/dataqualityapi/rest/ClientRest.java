@@ -17,8 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "/Client")
-@RequestMapping("/Client")
+@Api(value = "/client")
+@RequestMapping("/client")
 public interface ClientRest {
 
 	@ApiOperation(value = "Get all the Clients", notes = "No input params are required", response = Clients.class, responseContainer = "List")

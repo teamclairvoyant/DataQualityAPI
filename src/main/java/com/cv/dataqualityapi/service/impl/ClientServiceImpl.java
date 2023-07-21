@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.cv.dataqualityapi.constants.DataQualityContants;
 import com.cv.dataqualityapi.dao.ClientRepository;
+import com.cv.dataqualityapi.exception.BusinessException;
 import com.cv.dataqualityapi.model.Clients;
 import com.cv.dataqualityapi.service.ClientService;
-import com.cv.dataqualityapi.utils.BusinessException;
 
 @Service
 public class ClientServiceImpl implements ClientService {

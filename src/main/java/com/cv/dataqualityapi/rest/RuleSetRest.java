@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cv.dataqualityapi.dto.CreateRuleSetDto;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.wrapper.RuleRuleSetWrapper;
 import com.cv.dataqualityapi.wrapper.RuleSetRulesWrapper;
@@ -17,24 +18,25 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RequestMapping("RuleSet")
+@RequestMapping("rule-set")
 public interface RuleSetRest {
 
 	@ApiOperation(value = "Create Rule Set", notes = "Returns saved message after successfull insertion", response = String.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
 			@ApiResponse(code = 404, message = "Not found - The url was not found") })
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "ruleSetWrapper", dataTypeClass = RuleSetWrapper.class, value = "The body is a json", paramType = "body", required = true) })
+			@ApiImplicitParam(name = "ruleSetWrapper", allowMultiple = true, dataTypeClass = CreateRuleSetDto.class, value = "The body is a json", paramType = "body", required = true) })
 	@PostMapping(value = "createRuleSet")
-	public String createRuleSet(@RequestBody List<RuleSetWrapper> ruleSetWrapper) throws Exception;
+	public String createRuleSet(@RequestBody List<CreateRuleSetDto> createRuleSetDto) throws Exception;
 
 	@ApiOperation(value = "Delete Rule Set", notes = "Returns saved message after successfull insertion", response = String.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
 			@ApiResponse(code = 404, message = "Not found - The url was not found") })
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "ruleSetId", dataTypeClass = Integer.class, value = "The body is a json", paramType = "body", required = true) })
+			@ApiImplicitParam(name = "ruleSetIds", allowMultiple = true, dataTypeClass = Integer.class, value = "The body is a json", paramType = "body", required = true) })
+	       // @ApiImplicitParam(name = "ids", allowMultiple = true, dataTypeClass = Integer.class, value = "The body is a json", paramType = "body", required = true) 
 	@PostMapping(value = "deleteRuleSet")
-	public String deleteRuleSet(@RequestBody List<Integer> ruleSetId) throws Exception;
+	public String deleteRuleSet(@RequestBody List<Integer> ruleSetIds) throws Exception;
 
 	@ApiOperation(value = "Tag Rules to RuleSet", notes = "Returns saved message after successfull tagging", response = String.class, responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Saved"),
