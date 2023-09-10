@@ -14,9 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class JsonResponseDto {
+
   private Integer id;
+
   private String name;
+
   private String description;
+
   private List<String> notificationPreferences;
+
   private List<RulesJsonDto> rules;
+
+  private List<CreateTemplateDetailsDTO> createTemplateDetails;
+
+
 }

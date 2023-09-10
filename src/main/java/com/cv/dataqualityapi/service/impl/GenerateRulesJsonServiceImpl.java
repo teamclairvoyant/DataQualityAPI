@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.cv.dataqualityapi.Repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cv.dataqualityapi.dao.RuleSetRepository;
-import com.cv.dataqualityapi.dao.RulesRepository;
 import com.cv.dataqualityapi.dto.DataEntityAssociations;
 import com.cv.dataqualityapi.dto.DataEntityDetails;
 import com.cv.dataqualityapi.dto.JsonResponseDto;
@@ -17,7 +16,6 @@ import com.cv.dataqualityapi.dto.PropertiesDto;
 import com.cv.dataqualityapi.dto.RuleDetailsDto;
 import com.cv.dataqualityapi.dto.RulesJsonDto;
 import com.cv.dataqualityapi.exception.ResourceNotFoundException;
-import com.cv.dataqualityapi.model.EntityDetails;
 import com.cv.dataqualityapi.model.RuleSet;
 import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.service.GenerateRulesJsonService;
@@ -26,79 +24,58 @@ import com.cv.dataqualityapi.service.GenerateRulesJsonService;
 public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 
 	@Autowired
-	private RuleSetRepository ruleSetRepository;
+	private RuleSetRepo ruleSetRepository;
 
 	@Autowired
-	private RulesRepository ruleRepository;
+	private RulesRepo ruleRepository;
+
+	@Autowired
+	private EntityPropertiesRepo entityPropertiesRepository;
+
+	@Autowired
+	private EntityRepo entityRepository;
+
+	@Autowired
+	private EntityTemplatePropertiesRepo entityTemplatePropertiesRepository;
+
+	@Autowired
+	private EntityTemplateRepo entityTemplateRepository;
+
+	@Autowired
+	private RuleEntityMapRepo ruleEntityMapRepository;
+
+	@Autowired
+	private RulePropertiesRepo rulePropertiesRepository;
+
+	@Autowired
+	private RuleTemplatePropertiesRepo ruleTemplatePropertiesRepository;
+
+	@Autowired
+	private RuleTemplateRepo ruleTemplateRepository;
 
 	@Override
-	public JsonResponseDto generateRulesJson(String ruleSetName) {
-		Optional<RuleSet> ruleSetOp = ruleSetRepository.findByRulesetName(ruleSetName);
+	public JsonResponseDto generateRulesJson(String rulesetName) {
+
+		Optional<RuleSet> ruleSetOp = ruleSetRepository.findByRulesetName(rulesetName);
 		if (ruleSetOp.isEmpty()) {
 			throw new ResourceNotFoundException("rule set not found");
 		}
 
 		JsonResponseDto jsonResponse = new JsonResponseDto();
-		List<RulesJsonDto> rulesJsonDtoList = new ArrayList<>();
+		List<RulesJsonDto> ruleJsonList = new ArrayList<>();
 
-		RuleSet ruleSet = ruleSetOp.get();
-		AtomicInteger seq = new AtomicInteger(0);
+		RuleSet ruleset = ruleSetOp.get();
+		AtomicInteger seq = new AtomicInteger();
 
-		ruleSet.getRules().stream().forEach(rule -> {
-			Optional<Rules> rulesOp = ruleRepository.findByRuleName(rule.getRuleName());
-			EntityDetails entity = rulesOp.get().getEntityTable();
+		ruleset.getRules().stream().forEach(rules -> {
+			Optional<Rules> rulesOp = ruleRepository.findByRuleName(rules.getRuleName());
 
 			List<DataEntityAssociations> dataEntityAssociationsList = new ArrayList<>();
 			DataEntityAssociations dataEntityAssociations = new DataEntityAssociations();
 
-			DataEntityDetails dataEntityDetails = new DataEntityDetails();
-			dataEntityDetails.setId(entity.getEntityDetailsId());
-			dataEntityDetails.setType(entity.getType());
-			dataEntityDetails.setSubType(entity.getSubType());
-			dataEntityDetails.setPhysicalName(entity.getTableName());
-			dataEntityDetails.setLocation(entity.getLocation());
-			dataEntityDetails.setDescription(entity.getDescription());
-			dataEntityDetails.setPrimaryKey(entity.getPrimaryKey());
+		//	dataEntityAssociations.setEntity_id(entity.getEntity_id());
 
-			dataEntityAssociations.setBehaviour(entity.getBehaviour());
-			dataEntityAssociations.setDataEntityDetails(dataEntityDetails);
-			dataEntityAssociationsList.add(dataEntityAssociations);
-
-			List<PropertiesDto> propertyDtoList = new ArrayList<>();
-			rule.getProperties().entrySet().stream().forEach(prop -> {
-				PropertiesDto propDto = new PropertiesDto();
-				propDto.setName(prop.getKey().toString());
-				propDto.setValue(prop.getValue().toString());
-				propDto.setType("PREDEFINED");
-
-				propertyDtoList.add(propDto);
-			});
-
-			RuleDetailsDto ruleDetailsDto = new RuleDetailsDto();
-			ruleDetailsDto.setId(rule.getRuleId());
-			ruleDetailsDto.setName(rule.getRuleName());
-			ruleDetailsDto.setDescription(rule.getRuleDesc());
-			ruleDetailsDto.setMeasure(rule.getRulesType().getTypeName());
-			ruleDetailsDto.setDataEntityAssociations(dataEntityAssociationsList);
-			ruleDetailsDto.setProperties(propertyDtoList);
-
-			RulesJsonDto rulesJsonDto = new RulesJsonDto();
-			rulesJsonDto.setSequence(seq.incrementAndGet());
-			rulesJsonDto.setStatus("ACTIVE");
-			rulesJsonDto.setRuleDetails(ruleDetailsDto);
-
-			rulesJsonDtoList.add(rulesJsonDto);
 		});
-
-		List<String> notificationPreferences = new ArrayList<>();
-		notificationPreferences.add("EMAIL");
-
-		jsonResponse.setId(ruleSet.getRulesetId());
-		jsonResponse.setName(ruleSet.getRulesetName());
-		jsonResponse.setDescription(ruleSet.getRulesetDesc());
-		jsonResponse.setNotificationPreferences(notificationPreferences);
-		jsonResponse.setRules(rulesJsonDtoList);
-
 		return jsonResponse;
 	}
 

@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PropertiesDto {
-	private String name;
-	private String value;
+
+	private String key;
+
 	private String type;
+
+	private String value;
 }

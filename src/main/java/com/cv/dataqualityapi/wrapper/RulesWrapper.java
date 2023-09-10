@@ -14,16 +14,8 @@ public class RulesWrapper {
 
 	private Integer ruleId;
 
-	private String rulesType;
-
 	private String ruleDesc;
 
 	private String ruleName;
-
-	private String entityTable;
-
-	private String properties;
-
-	private String ruleSet;
 
 }

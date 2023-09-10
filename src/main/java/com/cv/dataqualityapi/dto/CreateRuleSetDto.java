@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateRuleSetDto {
 
+	private String rulesetId;
+
 	private String rulesetName;
 
 	private String rulesetDesc;
+
+	private String rulesetNotificationPreference;
 }
