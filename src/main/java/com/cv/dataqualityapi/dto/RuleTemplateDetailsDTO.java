@@ -2,30 +2,24 @@ package com.cv.dataqualityapi.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DataEntityAssociations {
+public class RuleTemplateDetailsDTO {
 
-	private Integer entity_id;
+    private Integer id;
 
-	private String entity_name;
+    private String name;
 
-	private String entity_physicalName;
+    private String description;
 
-	private String entity_behaviour;
+    private List<RuleTemplatePropertiesDTO> templateProperties;
 
-	private String entity_type;
-
-	private String entity_sub_type;
-
-	private String primary_key;
-
-	private String is_primary;
 }

@@ -30,12 +30,12 @@ public class RuleEntityMap {
     private Integer ruleEntityMapRuleId;
 
     @ApiModelProperty(notes = "entity_id", example = "1", required = true)
-    @Column(name = "rule_entity_map_entity_id",nullable = false, length = 200)
-    private Integer ruleEntityMapEntityId;
+    @Column(name = "entity_id",nullable = false, length = 200)
+    private Integer entityId;
 
     @ApiModelProperty(notes = "entity_behaviour", example = "1", required = true)
     @Column(name = "entity_behaviour",nullable = false, length = 200)
-    private Integer ruleEntityMapEntityBehaviour;
+    private String ruleEntityMapEntityBehaviour;
 
     @ApiModelProperty(notes = "is_primary", example = "CSV")
     @Column(name = "is_primary")
@@ -59,12 +59,12 @@ public class RuleEntityMap {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("entity_id")
-    @JoinColumn(name = "entity_id",referencedColumnName = "entity_id", insertable = false, updatable = false)
+    @JoinColumn(name = "entity_id", insertable = false, updatable = false)
     private Entities entities;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("rule_id")
-    @JoinColumn(name = "rule_id",referencedColumnName = "rule_id", insertable = false, updatable = false)
+    @JoinColumn(name = "rule_id", insertable = false, updatable = false)
     @JsonBackReference
     private Rules rules;
 }

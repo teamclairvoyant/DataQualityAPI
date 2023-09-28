@@ -19,5 +19,6 @@ public class RuleDetailsDto {
 	private String description;
 	private String measure;
 	private List<PropertiesDto> properties;
-	private List<DataEntityAssociations> dataEntityAssociations;
+	private List<DataEntityAssociations> data_entity_associations;
+	private RuleTemplateDetailsDTO template;
 }

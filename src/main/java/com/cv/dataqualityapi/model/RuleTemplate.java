@@ -26,15 +26,15 @@ public class RuleTemplate {
 
     @ApiModelProperty(notes = "dq_metric", example = "1", required = true)
     @Column(name = "dq_metric",nullable = false, length = 200)
-    private Integer ruletemplateDqMetric;
+    private String ruletemplateDqMetric;
 
     @ApiModelProperty(notes = "rule_template_name", example = "1", required = true)
     @Column(name = "rule_template_name",nullable = false, length = 200)
-    private Integer ruletemplateName;
+    private String ruletemplateName;
 
     @ApiModelProperty(notes = "rule_template_desc", example = "1", required = true)
     @Column(name = "rule_template_desc",nullable = false, length = 200)
-    private Integer ruletemplateDesc;
+    private String ruletemplateDesc;
 
     @ApiModelProperty(notes = "created_by", example = "CSV")
     @Column(name = "created_by")

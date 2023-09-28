@@ -30,11 +30,11 @@ public class RuleProperties {
 
     @ApiModelProperty(notes = "rule_properties_key", example = "1", required = true)
     @Column(name = "rule_prop_key",nullable = false, length = 200)
-    private Integer rulepropertiesKey;
+    private String rulepropertiesKey;
 
     @ApiModelProperty(notes = "rule_properties_value", example = "1", required = true)
     @Column(name = "rule_prop_value",nullable = false, length = 200)
-    private Integer rulepropertiesValue;
+    private String rulepropertiesValue;
 
     @ApiModelProperty(notes = "created_by", example = "CSV")
     @Column(name = "created_by")
@@ -54,6 +54,6 @@ public class RuleProperties {
 
     @ManyToOne
     @MapsId("rule_id")
-    @JoinColumn(name = "rule_id",referencedColumnName = "rule_id", insertable = false, updatable = false)
+    @JoinColumn(name = "rule_id", insertable = false, updatable = false)
     private Rules rules;
 }

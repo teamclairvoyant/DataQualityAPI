@@ -27,7 +27,7 @@ public class Entities {
 
 	@ApiModelProperty(notes = "entity_template_id", example = "Source")
 	@Column(name = "entity_template_id",nullable = false, length = 200)
-	private String entitytemplateId;
+	private Integer entitytemplateId;
 
 	@ApiModelProperty(notes = "entity_physical_name", example = "FILE")
 	@Column(name = "entity_physical_name",nullable = false, length = 200)
@@ -59,7 +59,7 @@ public class Entities {
 
 	@ManyToOne
 	@MapsId("entity_template_id")
-	@JoinColumn(name = "entity_template_id",referencedColumnName = "entity_template_id",insertable = false, updatable = false)
+	@JoinColumn(name = "entity_template_id",insertable = false, updatable = false)
 	private EntityTemplate entityTemp;
 
 	@OneToMany(mappedBy = "entities"  , cascade = CascadeType.ALL)

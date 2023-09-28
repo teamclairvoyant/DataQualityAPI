@@ -45,6 +45,14 @@ public class Rules {
 	@Column(name = "rule_id")
 	private Integer ruleId;
 
+	@Column(name = "rule_set_id")
+	@ApiModelProperty(notes = "rule_set_id")
+	private Integer rulesetId;
+
+	@Column(name = "rule_template_id")
+	@ApiModelProperty(notes = "rule_template_id")
+	private Integer ruletemplateId;
+
 	// newly added
 	@Column(name = "rule_desc", nullable = false, length = 100)
 	@ApiModelProperty(notes = "Rule Description", example = "Some description of the Rule", required = false)
@@ -80,7 +88,7 @@ public class Rules {
 	@ManyToOne
 	@MapsId("rule_template_id")
 	@JoinColumn(name = "rule_template_id", insertable = false, updatable = false)
-	private RuleSet ruleTemp;
+	private RuleTemplate ruleTemp;
 
 	@OneToMany(mappedBy = "rules")
 	private Set<RuleProperties> rulesprop;

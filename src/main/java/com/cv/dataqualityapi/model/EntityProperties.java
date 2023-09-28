@@ -53,7 +53,7 @@ public class EntityProperties {
 	private String entitypropUpdatedDate;
 
 	@ManyToOne()
-	@JoinColumn(name = "entity_id", referencedColumnName = "entity_id", insertable = false, updatable = false)
+	@JoinColumn(name = "entity_id", insertable = false, updatable = false)
 	private Entities entities;
 
 }

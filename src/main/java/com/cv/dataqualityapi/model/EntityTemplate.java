@@ -56,11 +56,9 @@ public class EntityTemplate {
     private Date entitytemplateUpdatedDate;
 
     @OneToMany(mappedBy = "entityTemp", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
     private Set<EntityTemplateProperties> entityTemProp;
 
-    @OneToMany(mappedBy = "entityTemp" , cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonBackReference
+    @OneToMany(mappedBy = "entityTemp", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Entities> entity;
 
 }

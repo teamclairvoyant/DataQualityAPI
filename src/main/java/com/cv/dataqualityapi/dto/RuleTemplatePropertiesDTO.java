@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTemplatePropertiesDTO {
+public class RuleTemplatePropertiesDTO {
 
     private String mandatory;
 

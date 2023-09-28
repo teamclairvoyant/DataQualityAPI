@@ -15,6 +15,7 @@ public class GenerateRulesJsonRestImpl implements GenerateRulesJsonRest{
 
 	@Override
 	public JsonResponseDto generateRulesJson(String ruleSetName) {
+
 		return ruleService.generateRulesJson(ruleSetName);
 	}
 }

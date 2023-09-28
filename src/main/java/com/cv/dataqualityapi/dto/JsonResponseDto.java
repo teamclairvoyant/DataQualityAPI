@@ -24,8 +24,4 @@ public class JsonResponseDto {
   private List<String> notificationPreferences;
 
   private List<RulesJsonDto> rules;
-
-  private List<CreateTemplateDetailsDTO> createTemplateDetails;
-
-
 }

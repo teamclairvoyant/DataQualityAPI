@@ -23,11 +23,11 @@ public class EntityTemplateProperties {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "entitytemplateprop Id", example = "1", required = true)
     @Column(name = "entity_template_prop_id")
-    private String entitytemplatepropId;
+    private Integer entitytemplatepropId;
 
-    @ApiModelProperty(notes = "entity_template_id", example = "Source")
+    @ApiModelProperty(notes = "entity_template_id")
     @Column(name = "entity_template_id")
-    private String entitytemplateId;
+    private Integer entitytemplateId;
 
     @ApiModelProperty(notes = "entity_template_prop_key", example = "Source")
     @Column(name = "entity_template_prop_key")
@@ -62,7 +62,7 @@ public class EntityTemplateProperties {
     private String entitytemplatepropUpdatedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_template_id",referencedColumnName = "entity_template_id", insertable = false, updatable = false)
+    @JoinColumn(name = "entity_template_id", insertable = false, updatable = false)
     @JsonBackReference
     private EntityTemplate entityTemp;
 

@@ -24,21 +24,25 @@ public class RuleTemplateProperties {
     @Column(name = "rule_template_properties_id",nullable = false, length = 200)
     private Integer ruletemplatepropertiesId;
 
+    @Column(name = "rule_template_id")
+    @ApiModelProperty(notes = "rule_template_id")
+    private Integer ruletemplateId;
+
     @ApiModelProperty(notes = "rule_template_prop_key", example = "1", required = true)
     @Column(name = "rule_template_prop_key",nullable = false, length = 200)
-    private Integer ruletemplatepropertiesKey;
+    private String ruletemplatepropertiesKey;
 
     @ApiModelProperty(notes = "rule_template_prop_type", example = "1", required = true)
     @Column(name = "rule_template_prop_type",nullable = false, length = 200)
-    private Integer ruletemplatepropertiesType;
+    private String ruletemplatepropertiesType;
 
     @ApiModelProperty(notes = "rule_template_prop_value", example = "1", required = true)
     @Column(name = "rule_template_prop_value",nullable = false, length = 200)
-    private Integer ruletemplatepropertiesValue;
+    private String ruletemplatepropertiesValue;
 
     @ApiModelProperty(notes = "rule_template_desc", example = "1", required = true)
     @Column(name = "rule_template_desc",nullable = false, length = 200)
-    private Integer ruletemplatepropertiesDesc;
+    private String ruletemplatepropertiesDesc;
 
     @ApiModelProperty(notes = "is_mandatory", example = "CSV")
     @Column(name = "is_mandatory")
@@ -62,7 +66,6 @@ public class RuleTemplateProperties {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("rule_template_id")
-    @JoinColumn(name = "rule_template_id",referencedColumnName = "rule_template_id",insertable = false,updatable = false)
-    @JsonBackReference
+    @JoinColumn(name = "rule_template_id",insertable = false,updatable = false)
     private RuleTemplate ruleTemp;
 }
