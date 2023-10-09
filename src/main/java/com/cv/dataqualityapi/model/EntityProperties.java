@@ -19,7 +19,7 @@ import java.util.Set;
 public class EntityProperties {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(notes = "Entity Id", example = "1", required = true)
 	@Column(name = "entity_prop_id")
 	private Integer entitypropId;

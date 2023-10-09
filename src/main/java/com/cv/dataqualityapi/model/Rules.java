@@ -40,7 +40,7 @@ import lombok.ToString;
 public class Rules {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(notes = "Rule ID", example = "1", required = true)
 	@Column(name = "rule_id")
 	private Integer ruleId;

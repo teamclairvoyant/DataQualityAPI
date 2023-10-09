@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface EntityTemplatePropertiesRepo extends JpaRepository<EntityTemplateProperties,Integer>{
-   // Optional<Object> findByName(String name);
+
 }

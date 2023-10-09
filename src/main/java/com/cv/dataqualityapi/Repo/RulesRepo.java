@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface RulesRepo extends JpaRepository<Rules,Integer> {
-      //  Optional<Rules> findByRuleName(String ruleName);
+        Optional<Rules> findByRuleName(String ruleName);
 
 }
 

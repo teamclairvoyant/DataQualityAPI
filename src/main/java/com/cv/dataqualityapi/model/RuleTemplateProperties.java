@@ -19,9 +19,9 @@ import java.util.Set;
 public class RuleTemplateProperties {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "rule_template_properties_id", example = "1", required = true)
-    @Column(name = "rule_template_properties_id",nullable = false, length = 200)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "rule_template_prop_id", example = "1", required = true)
+    @Column(name = "rule_template_prop_id",nullable = false, length = 200)
     private Integer ruletemplatepropertiesId;
 
     @Column(name = "rule_template_id")
@@ -40,8 +40,8 @@ public class RuleTemplateProperties {
     @Column(name = "rule_template_prop_value",nullable = false, length = 200)
     private String ruletemplatepropertiesValue;
 
-    @ApiModelProperty(notes = "rule_template_desc", example = "1", required = true)
-    @Column(name = "rule_template_desc",nullable = false, length = 200)
+    @ApiModelProperty(notes = "rule_template_prop_desc", example = "1", required = true)
+    @Column(name = "rule_template_prop_desc",nullable = false, length = 200)
     private String ruletemplatepropertiesDesc;
 
     @ApiModelProperty(notes = "is_mandatory", example = "CSV")

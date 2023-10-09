@@ -19,7 +19,7 @@ import java.util.Set;
 public class RuleTemplate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "rule_template_id", example = "1", required = true)
     @Column(name = "rule_template_id",nullable = false, length = 200)
     private Integer ruletemplateId;

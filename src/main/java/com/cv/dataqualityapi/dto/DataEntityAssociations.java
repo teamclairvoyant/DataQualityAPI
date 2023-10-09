@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,4 +30,8 @@ public class DataEntityAssociations {
 	private String primary_key;
 
 	private String is_primary;
+
+	private List<EntityPropertiesDto> properties;
+
+	private List<EntityTemplatePropertiesDto> all_entity_properties;
 }

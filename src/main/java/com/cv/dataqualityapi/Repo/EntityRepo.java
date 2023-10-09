@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface EntityRepo extends JpaRepository<Entities,Integer> {
 
 
-  //  Optional<Entities> findByEntityId(Integer EntityId);
+    Optional<Entities> findByEntityId(Integer EntityId);
 
-  //  Optional<Object> findByEntityName(String name);
+    Optional<Object> findByEntityName(String name);
 
 
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface RuleTemplateRepo extends JpaRepository<RuleTemplate,Integer> {
-  //  Optional<Object> findRuleTemplateByName(String name);
+    Optional<Object> findByRuletemplateName(String Name);
 }

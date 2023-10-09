@@ -68,6 +68,37 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 
 			List<DataEntityAssociations> dataEntityAssociationsList = new ArrayList<>();
 			rule.getRuleEntityMap().stream().forEach(ruleMap -> {
+
+				List<EntityPropertiesDto> entityPropList = new ArrayList<>();
+				ruleMap.getEntities().getEntityProp().stream().forEach(entityPro ->
+				{
+					EntityPropertiesDto entityPropListDto = new EntityPropertiesDto();
+					entityPropListDto.setEntityPropId(entityPro.getEntitypropId().toString());
+					entityPropListDto.setEntityPropKey(entityPro.getEntitypropKey());
+					entityPropListDto.setEntityPropValue(entityPro.getEntitypropValue());
+					entityPropListDto.setUpdatedBy(entityPro.getEntitypropUpdatedBy());
+					entityPropListDto.setCreatedDate(entityPro.getEntitypropCreatedDate());
+					entityPropListDto.setUpdatedDated(entityPro.getEntitypropUpdatedDate());
+					entityPropListDto.setCreatedBy(entityPro.getEntitypropCreatedBy());
+					entityPropList.add(entityPropListDto);
+				});
+
+				List<EntityTemplatePropertiesDto> entityTemplatePropList = new ArrayList<>();
+				ruleMap.getEntities().getEntityTemp().getEntityTemProp().stream().forEach(entityTemplateProp ->
+				{
+					EntityTemplatePropertiesDto entityTemplatePropListDto = new EntityTemplatePropertiesDto();
+					entityTemplatePropListDto.setEntityTemplatePropId(entityTemplateProp.getEntitytemplatepropId().toString());
+					entityTemplatePropListDto.setEntityTemplatePropDesc(entityTemplateProp.getEntitytemplatepropDesc());
+					entityTemplatePropListDto.setEntityTemplatePropKey(entityTemplateProp.getEntitytemplatepropKey());
+					entityTemplatePropListDto.setEntityTemplatePropType(entityTemplateProp.getEntitytemplatepropType());
+					entityTemplatePropListDto.setIsMandatory(entityTemplateProp.getIsMandatory());
+					entityTemplatePropListDto.setCreatedBy(entityTemplateProp.getEntitytemplatepropCreatedBy());
+					entityTemplatePropListDto.setCreatedDate(entityTemplateProp.getEntitytemplatepropCreatedDate());
+					entityTemplatePropListDto.setUpdatedBy(entityTemplateProp.getEntitytemplatepropUpdatedBy());
+					entityTemplatePropListDto.setUpdatedDate(entityTemplateProp.getEntitytemplatepropUpdatedDate());
+					entityTemplatePropList.add(entityTemplatePropListDto);
+				});
+
 				DataEntityAssociations entityAssociationsDto = new DataEntityAssociations();
 				entityAssociationsDto.setEntity_id(ruleMap.getEntities().getEntityId());
 				entityAssociationsDto.setEntity_type(ruleMap.getEntities().getEntityTemp().getEntitytemplateType());
@@ -76,6 +107,9 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 				entityAssociationsDto.setEntity_name(ruleMap.getEntities().getEntityName());
 				entityAssociationsDto.setEntity_physicalName(ruleMap.getEntities().getEntityPhysicalName());
 				entityAssociationsDto.setPrimary_key(ruleMap.getEntities().getEntityPrimaryKey());
+				entityAssociationsDto.setProperties(entityPropList);
+				entityAssociationsDto.setAll_entity_properties(entityTemplatePropList);
+
 				dataEntityAssociationsList.add(entityAssociationsDto);
 			});
 

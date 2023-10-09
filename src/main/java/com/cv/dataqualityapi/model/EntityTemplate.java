@@ -24,17 +24,17 @@ import lombok.Setter;
 public class EntityTemplate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "EntityDetails Id", example = "1", required = true)
     @Column(name = "entity_template_id")
     private Integer entitytemplateId;
 
     @ApiModelProperty(notes = "entity_type", example = "Source")
-    @Column(name = "entity_type")
+    @Column(name = "entity_template_type")
     private String entitytemplateType;
 
     @ApiModelProperty(notes = "sub type of entity", example = "FILE")
-    @Column(name = "entity_subtype")
+    @Column(name = "entity_template_subtype")
     private String entitytemplateSubtype;
 
     @ApiModelProperty(notes = "created by name", example = "Clairvoyant")

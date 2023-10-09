@@ -25,7 +25,7 @@ import lombok.ToString;
 public class RuleSet {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rule_set_id")
 	private Integer rulesetId;
 
@@ -35,7 +35,7 @@ public class RuleSet {
 	@Column(name = "rule_set_desc", nullable = false, length = 200)
 	private String rulesetDesc;
 
-	@Column(name = "Notification_Preferences", nullable = false, length = 200)
+	@Column(name = "Notification_preferences", nullable = false, length = 200)
 	private String rulesetNotificationPreferences;
 
 	@Column(name = "created_by", nullable = false, length = 200)
