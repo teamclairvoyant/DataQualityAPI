@@ -62,7 +62,7 @@ public class Rules {
 	@ApiModelProperty(notes = "Rule Name", example = "Some Name for Rule", required = false)
 	private String ruleName;
 
-	@Column(name = "created_ts")
+	@Column(name = "created_date")
 	@ApiModelProperty(notes = "Rule creation timestamp", example = "2023-04-18 14:20:20.785", required = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
