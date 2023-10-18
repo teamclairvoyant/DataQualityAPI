@@ -19,7 +19,7 @@ public class DataEntityAssociations {
 
 	private String entity_name;
 
-	private String entity_physicalName;
+	private String entity_physical_name;
 
 	private String entity_behaviour;
 

@@ -35,7 +35,7 @@ public class RuleSet {
 	@Column(name = "rule_set_desc", nullable = false, length = 200)
 	private String rulesetDesc;
 
-	@Column(name = "Notification_Email", nullable = false, length = 200)
+	@Column(name = "notification_email", nullable = false, length = 200)
 	private String rulesetNotificationEmail;
 
 	@Column(name = "created_by", nullable = false, length = 200)

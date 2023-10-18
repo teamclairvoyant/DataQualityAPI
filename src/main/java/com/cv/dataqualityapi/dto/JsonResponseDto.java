@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class JsonResponseDto {
 
-  private Integer id;
+  private Integer ruleset_id;
 
-  private String name;
+  private String ruleset_name;
 
-  private String description;
+  private String ruleset_desc;
 
-  private List<String> notificationPreferences;
+  private List<String> notification_preference;
 
   private List<RulesJsonDto> rules;
 }
