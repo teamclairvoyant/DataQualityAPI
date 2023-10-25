@@ -82,9 +82,9 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 				ruleMap.getEntities().getEntityTemp().getEntityTemProp().stream().forEach(entityTemplateProp ->
 				{
 					EntityTemplatePropertiesDto entityTemplatePropListDto = new EntityTemplatePropertiesDto();
-					entityTemplatePropListDto.setEntityTemplatePropDesc(entityTemplateProp.getEntitytemplatepropDesc());
-					entityTemplatePropListDto.setEntityTemplatePropKey(entityTemplateProp.getEntitytemplatepropKey());
-					entityTemplatePropListDto.setIsMandatory(entityTemplateProp.getIsMandatory());
+					entityTemplatePropListDto.setDescription(entityTemplateProp.getEntitytemplatepropDesc());
+					entityTemplatePropListDto.setKey(entityTemplateProp.getEntitytemplatepropKey());
+					entityTemplatePropListDto.setMandatory(entityTemplateProp.getIsMandatory());
 
 					entityTemplatePropList.add(entityTemplatePropListDto);
 				});
@@ -109,7 +109,7 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 				PropertiesDto propDto = new PropertiesDto();
 				propDto.setKey(prop.getRulepropertiesKey());
 				propDto.setValue(prop.getRulepropertiesValue());
-				propDto.setType("VARIABLE");
+			//	propDto.setType("VARIABLE");
 				propertyDtoList.add(propDto);
 			});
 
@@ -129,7 +129,7 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 			ruleTemplateDetailsDto.setId(rule.getRuletemplateId());
 			ruleTemplateDetailsDto.setName(rule.getRuleTemp().getRuletemplateName());
 			ruleTemplateDetailsDto.setDescription(rule.getRuleTemp().getRuletemplateDesc());
-			ruleTemplateDetailsDto.setTemplateProperties(ruleTempPropDtoList);
+			ruleTemplateDetailsDto.setProperties(ruleTempPropDtoList);
 
 			RuleDetailsDto ruleDetailsDto = new RuleDetailsDto();
 			ruleDetailsDto.setId(rule.getRuleId());
@@ -148,13 +148,10 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 
 		});
 
-		List<String> notificationPreferences = new ArrayList<>();
-		notificationPreferences.add("EMAIL");
-
 		jsonResponse.setRuleset_id(ruleset.getRulesetId());
 		jsonResponse.setRuleset_name(ruleset.getRulesetName());
 		jsonResponse.setRuleset_desc(ruleset.getRulesetDesc());
-		jsonResponse.setNotification_preference(notificationPreferences);
+		jsonResponse.setNotification_email(ruleset.getRulesetNotificationEmail());
 		jsonResponse.setRules(rulesJsonDtolist);
 
 		return jsonResponse;

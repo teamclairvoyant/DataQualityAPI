@@ -20,6 +20,6 @@ public class RuleTemplateDetailsDTO {
 
     private String description;
 
-    private List<RuleTemplatePropertiesDTO> templateProperties;
+    private List<RuleTemplatePropertiesDTO> properties;
 
 }

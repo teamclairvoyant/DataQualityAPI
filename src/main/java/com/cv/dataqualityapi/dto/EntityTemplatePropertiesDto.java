@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EntityTemplatePropertiesDto {
 
-    private String entityTemplatePropDesc;
+    private String description;
 
-    private String entityTemplatePropKey;
+    private String Key;
 
-    private String isMandatory;
+    private String mandatory;
 
 }

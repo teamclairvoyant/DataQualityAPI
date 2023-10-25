@@ -21,7 +21,7 @@ public class JsonResponseDto {
 
   private String ruleset_desc;
 
-  private List<String> notification_preference;
+  private String notification_email;
 
   private List<RulesJsonDto> rules;
 }

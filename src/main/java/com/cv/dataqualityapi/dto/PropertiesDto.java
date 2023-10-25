@@ -11,7 +11,7 @@ public class PropertiesDto {
 
 	private String key;
 
-	private String type;
+	//private String type;
 
 	private String value;
 }
