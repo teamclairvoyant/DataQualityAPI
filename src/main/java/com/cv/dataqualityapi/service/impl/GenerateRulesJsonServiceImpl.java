@@ -18,6 +18,7 @@ import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.service.GenerateRulesJsonService;
 
 @Service
+
 public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 
 	@Autowired
@@ -69,82 +70,82 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 			List<DataEntityAssociations> dataEntityAssociationsList = new ArrayList<>();
 			rule.getRuleEntityMap().stream().forEach(ruleMap -> {
 
-				List<EntityPropertiesDto> entityPropList = new ArrayList<>();
-				ruleMap.getEntities().getEntityProp().stream().forEach(entityPro ->
-				{
-					EntityPropertiesDto entityPropListDto = new EntityPropertiesDto();
-					entityPropListDto.setKey(entityPro.getEntitypropKey());
-					entityPropListDto.setValue(entityPro.getEntitypropValue());
-					entityPropList.add(entityPropListDto);
+					List<EntityPropertiesDto> entityPropList = new ArrayList<>();
+					ruleMap.getEntities().getEntityProp().stream().forEach(entityPro ->
+					{
+						EntityPropertiesDto entityPropListDto = new EntityPropertiesDto();
+						entityPropListDto.setKey(entityPro.getEntitypropKey());
+						entityPropListDto.setValue(entityPro.getEntitypropValue());
+						entityPropList.add(entityPropListDto);
+					});
+
+					List<EntityTemplatePropertiesDto> entityTemplatePropList = new ArrayList<>();
+					ruleMap.getEntities().getEntityTemp().getEntityTemProp().stream().forEach(entityTemplateProp ->
+					{
+						EntityTemplatePropertiesDto entityTemplatePropListDto = new EntityTemplatePropertiesDto();
+						entityTemplatePropListDto.setDescription(entityTemplateProp.getEntitytemplatepropDesc());
+						entityTemplatePropListDto.setKey(entityTemplateProp.getEntitytemplatepropKey());
+						entityTemplatePropListDto.setMandatory(entityTemplateProp.getIsMandatory());
+
+						entityTemplatePropList.add(entityTemplatePropListDto);
+					});
+						DataEntityAssociations entityAssociationsDto = new DataEntityAssociations();
+						entityAssociationsDto.setEntity_id(ruleMap.getEntities().getEntityId());
+						entityAssociationsDto.setEntity_type(ruleMap.getEntities().getEntityTemp().getEntityType());
+						entityAssociationsDto.setEntity_behaviour(ruleMap.getRuleEntityMapEntityBehaviour());
+						entityAssociationsDto.setEntity_sub_type(ruleMap.getEntities().getEntityTemp().getEntitySubtype());
+						entityAssociationsDto.setEntity_name(ruleMap.getEntities().getEntityName());
+						entityAssociationsDto.setEntity_physical_name(ruleMap.getEntities().getEntityPhysicalName());
+						entityAssociationsDto.setPrimary_key(ruleMap.getEntities().getEntityPrimaryKey());
+						entityAssociationsDto.setIs_primary(ruleMap.getRuleEntityMapIsPrimary());
+						entityAssociationsDto.setProperties(entityPropList);
+						entityAssociationsDto.setAll_entity_properties(entityTemplatePropList);
+
+						dataEntityAssociationsList.add(entityAssociationsDto);
+
 				});
 
-				List<EntityTemplatePropertiesDto> entityTemplatePropList = new ArrayList<>();
-				ruleMap.getEntities().getEntityTemp().getEntityTemProp().stream().forEach(entityTemplateProp ->
-				{
-					EntityTemplatePropertiesDto entityTemplatePropListDto = new EntityTemplatePropertiesDto();
-					entityTemplatePropListDto.setDescription(entityTemplateProp.getEntitytemplatepropDesc());
-					entityTemplatePropListDto.setKey(entityTemplateProp.getEntitytemplatepropKey());
-					entityTemplatePropListDto.setMandatory(entityTemplateProp.getIsMandatory());
-
-					entityTemplatePropList.add(entityTemplatePropListDto);
+				List<PropertiesDto> propertyDtoList = new ArrayList<>();
+				rule.getRulesprop().stream().forEach(prop -> {
+					PropertiesDto propDto = new PropertiesDto();
+					propDto.setKey(prop.getRulepropertiesKey());
+					propDto.setValue(prop.getRulepropertiesValue());
+				//	propDto.setType("VARIABLE");
+					propertyDtoList.add(propDto);
 				});
 
-				DataEntityAssociations entityAssociationsDto = new DataEntityAssociations();
-				entityAssociationsDto.setEntity_id(ruleMap.getEntities().getEntityId());
-				entityAssociationsDto.setEntity_type(ruleMap.getEntities().getEntityTemp().getEntityType());
-				entityAssociationsDto.setEntity_behaviour(ruleMap.getRuleEntityMapEntityBehaviour());
-				entityAssociationsDto.setEntity_sub_type(ruleMap.getEntities().getEntityTemp().getEntitySubtype());
-				entityAssociationsDto.setEntity_name(ruleMap.getEntities().getEntityName());
-				entityAssociationsDto.setEntity_physical_name(ruleMap.getEntities().getEntityPhysicalName());
-				entityAssociationsDto.setPrimary_key(ruleMap.getEntities().getEntityPrimaryKey());
-				entityAssociationsDto.setIs_primary("TRUE");
-				entityAssociationsDto.setProperties(entityPropList);
-				entityAssociationsDto.setAll_entity_properties(entityTemplatePropList);
+				List<RuleTemplateDetailsDTO> ruleTemplateDetailsDtolist = new ArrayList<>();
 
-				dataEntityAssociationsList.add(entityAssociationsDto);
-			});
+				List<RuleTemplatePropertiesDTO> ruleTempPropDtoList = new ArrayList<>();
+				rule.getRuleTemp().getRuleTempProp().stream().forEach(temp -> {
+					RuleTemplatePropertiesDTO ruleTempPropDto = new RuleTemplatePropertiesDTO();
+					ruleTempPropDto.setMandatory(temp.getRuletemplatepropertiesIsMandatory());
+					ruleTempPropDto.setDescription(temp.getRuletemplatepropertiesDesc());
+					ruleTempPropDto.setType(temp.getRuletemplatepropertiesType());
+					ruleTempPropDto.setKey(temp.getRuletemplatepropertiesKey());
+					ruleTempPropDto.setValue(temp.getRuletemplatepropertiesValue());
+					ruleTempPropDtoList.add(ruleTempPropDto);
+				});
+				RuleTemplateDetailsDTO ruleTemplateDetailsDto = new RuleTemplateDetailsDTO();
+				ruleTemplateDetailsDto.setId(rule.getRuletemplateId());
+				ruleTemplateDetailsDto.setName(rule.getRuleTemp().getRuletemplateName());
+				ruleTemplateDetailsDto.setDescription(rule.getRuleTemp().getRuletemplateDesc());
+				ruleTemplateDetailsDto.setProperties(ruleTempPropDtoList);
 
-			List<PropertiesDto> propertyDtoList = new ArrayList<>();
-			rule.getRulesprop().stream().forEach(prop -> {
-				PropertiesDto propDto = new PropertiesDto();
-				propDto.setKey(prop.getRulepropertiesKey());
-				propDto.setValue(prop.getRulepropertiesValue());
-			//	propDto.setType("VARIABLE");
-				propertyDtoList.add(propDto);
-			});
+				RuleDetailsDto ruleDetailsDto = new RuleDetailsDto();
+				ruleDetailsDto.setId(rule.getRuleId());
+				ruleDetailsDto.setName(rule.getRuleName());
+				ruleDetailsDto.setDescription(rule.getRuleDesc());
+				ruleDetailsDto.setDq_metric(rule.getRuleTemp().getRuletemplateDqMetric());
+				ruleDetailsDto.setData_entity_associations(dataEntityAssociationsList);
+				ruleDetailsDto.setProperties(propertyDtoList);
+				ruleDetailsDto.setTemplate(ruleTemplateDetailsDto);
 
-
-			List<RuleTemplateDetailsDTO> ruleTemplateDetailsDtolist = new ArrayList<>();
-
-			List<RuleTemplatePropertiesDTO> ruleTempPropDtoList = new ArrayList<>();
-			rule.getRuleTemp().getRuleTempProp().stream().forEach(temp -> {
-				RuleTemplatePropertiesDTO ruleTempPropDto = new RuleTemplatePropertiesDTO();
-				ruleTempPropDto.setMandatory(temp.getRuletemplatepropertiesIsMandatory());
-				ruleTempPropDto.setDescription(temp.getRuletemplatepropertiesDesc());
-				ruleTempPropDto.setType(temp.getRuletemplatepropertiesType());
-				ruleTempPropDto.setKey(temp.getRuletemplatepropertiesKey());
-				ruleTempPropDtoList.add(ruleTempPropDto);
-			});
-			RuleTemplateDetailsDTO ruleTemplateDetailsDto = new RuleTemplateDetailsDTO();
-			ruleTemplateDetailsDto.setId(rule.getRuletemplateId());
-			ruleTemplateDetailsDto.setName(rule.getRuleTemp().getRuletemplateName());
-			ruleTemplateDetailsDto.setDescription(rule.getRuleTemp().getRuletemplateDesc());
-			ruleTemplateDetailsDto.setProperties(ruleTempPropDtoList);
-
-			RuleDetailsDto ruleDetailsDto = new RuleDetailsDto();
-			ruleDetailsDto.setId(rule.getRuleId());
-			ruleDetailsDto.setName(rule.getRuleName());
-			ruleDetailsDto.setDescription(rule.getRuleDesc());
-		    ruleDetailsDto.setDq_metric(rule.getRuleTemp().getRuletemplateDqMetric());
-			ruleDetailsDto.setData_entity_associations(dataEntityAssociationsList);
-			ruleDetailsDto.setProperties(propertyDtoList);
-			ruleDetailsDto.setTemplate(ruleTemplateDetailsDto);
-
-			RulesJsonDto rulesJsonDto = new RulesJsonDto();
-			rulesJsonDto.setSequence(seq.incrementAndGet());
-			rulesJsonDto.setStatus("ACTIVE");
-			rulesJsonDto.setRuleDetails(ruleDetailsDto);
-			rulesJsonDtolist.add(rulesJsonDto);
+				RulesJsonDto rulesJsonDto = new RulesJsonDto();
+				rulesJsonDto.setSequence(seq.incrementAndGet());
+				rulesJsonDto.setStatus("ACTIVE");
+				rulesJsonDto.setRuleDetails(ruleDetailsDto);
+				rulesJsonDtolist.add(rulesJsonDto);
 
 		});
 
