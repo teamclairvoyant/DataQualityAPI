@@ -68,8 +68,7 @@ public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 		ruleset.getRules().stream().forEach(rule -> {
 
 			List<DataEntityAssociations> dataEntityAssociationsList = new ArrayList<>();
-			rule.getRuleEntityMap().stream().forEach(ruleMap -> {
-
+			rule.getRuleEntityMap().stream().filter(ruleMap -> ruleMap.getRuleEntityMapIsPrimary().equalsIgnoreCase("TRUE")).forEach(ruleMap -> {
 					List<EntityPropertiesDto> entityPropList = new ArrayList<>();
 					ruleMap.getEntities().getEntityProp().stream().forEach(entityPro ->
 					{

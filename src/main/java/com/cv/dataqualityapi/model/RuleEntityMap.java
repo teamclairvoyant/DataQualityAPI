@@ -37,19 +37,19 @@ public class RuleEntityMap {
     @Column(name = "entity_behaviour",nullable = false, length = 200)
     private String ruleEntityMapEntityBehaviour;
 
-    @ApiModelProperty(notes = "is_primary", example = "CSV")
+    @ApiModelProperty(notes = "is_primary")
     @Column(name = "is_primary")
     private String ruleEntityMapIsPrimary;
 
-    @ApiModelProperty(notes = "created_by", example = "CSV")
+    @ApiModelProperty(notes = "created_by")
     @Column(name = "created_by")
     private String ruleEntityMapCreatedBy;
 
-    @ApiModelProperty(notes = "updated_by", example = "FILE")
+    @ApiModelProperty(notes = "updated_by")
     @Column(name = "updated_by")
     private String ruleEntityMapUpdatedBy;
 
-    @ApiModelProperty(notes = "created_date", example = "CSV")
+    @ApiModelProperty(notes = "created_date")
     @Column(name = "created_date")
     private String ruleEntityMapCreatedDate;
 
