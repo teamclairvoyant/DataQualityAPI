@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "entity")
+@Table(name = "dq_metadata.entity")
 public class Entities {
 
 	@Id

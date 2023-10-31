@@ -9,6 +9,8 @@ import com.cv.dataqualityapi.Repo.*;
 import com.cv.dataqualityapi.dto.*;
 import com.cv.dataqualityapi.model.Entities;
 import com.cv.dataqualityapi.model.RuleEntityMap;
+import com.google.cloud.bigquery.DatasetId;
+import com.google.cloud.bigquery.QueryJobConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,9 @@ import com.cv.dataqualityapi.service.GenerateRulesJsonService;
 @Service
 
 public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
-
+	public QueryJobConfiguration.Builder setDefaultDataset(DatasetId defaultDataset) {
+		return setDefaultDataset(DatasetId.of("dq_metadata"));
+	}
 	@Autowired
 	private RuleSetRepo ruleSetRepository;
 

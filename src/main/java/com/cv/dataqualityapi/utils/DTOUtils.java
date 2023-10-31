@@ -26,4 +26,5 @@ public class DTOUtils {
 
         return StringUtils.toStringArray(nullProperties);
     }
+
 }

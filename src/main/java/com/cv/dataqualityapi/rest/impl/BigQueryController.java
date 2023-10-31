@@ -21,7 +21,7 @@ public class BigQueryController {
 
 	@GetMapping
 	public void getData() throws JobException, InterruptedException {
-		String query = "select * from entity_template_properties_copy";
+		String query = "select * from dq_metadata.ruleset";
 
 		QueryJobConfiguration queryJobConfiguration = QueryJobConfiguration.newBuilder(query).build();
 		TableResult result = bigQuery.query(queryJobConfiguration);

@@ -21,8 +21,8 @@ public class RuleEntityMap {
 
     @Id
   //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "rule_entity_map_id", example = "1", required = true)
-    @Column(name = "rule_entity_map_id",nullable = false, length = 200)
+    @ApiModelProperty(notes = "rule_entity_id", example = "1", required = true)
+    @Column(name = "rule_entity_id",nullable = false, length = 200)
     private Integer ruleEntityMapId;
 
     @ApiModelProperty(notes = "rule_id", example = "1", required = true)
