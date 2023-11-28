@@ -30,11 +30,11 @@ public class EntityTemplate {
     private Integer entitytemplateId;
 
     @ApiModelProperty(notes = "entity_type", example = "Source")
-    @Column(name = "entity_type")
+    @Column(name = "entity_template_type")
     private String entityType;
 
     @ApiModelProperty(notes = "sub type of entity", example = "FILE")
-    @Column(name = "entity_subtype")
+    @Column(name = "entity_template_subtype")
     private String entitySubtype;
 
     @ApiModelProperty(notes = "created by name", example = "Clairvoyant")

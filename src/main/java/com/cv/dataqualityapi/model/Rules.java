@@ -36,7 +36,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "rules")
+@Table(name = "rule")
 public class Rules {
 
 	@Id
@@ -45,7 +45,7 @@ public class Rules {
 	@Column(name = "rule_id")
 	private Integer ruleId;
 
-	@Column(name = "rule_set_id")
+	@Column(name = "ruleset_id")
 	@ApiModelProperty(notes = "rule_set_id")
 	private Integer rulesetId;
 
@@ -81,8 +81,8 @@ public class Rules {
 	private String updatedBy;
 
 	@ManyToOne
-	@MapsId("rule_set_id")
-	@JoinColumn(name = "rule_set_id", insertable = false, updatable = false)
+	@MapsId("ruleset_id")
+	@JoinColumn(name = "ruleset_id", insertable = false, updatable = false)
 	private RuleSet ruleSet;
 
 	@ManyToOne

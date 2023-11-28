@@ -9,6 +9,7 @@ import com.cv.dataqualityapi.Repo.*;
 import com.cv.dataqualityapi.dto.*;
 import com.cv.dataqualityapi.model.Entities;
 import com.cv.dataqualityapi.model.RuleEntityMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import com.cv.dataqualityapi.model.Rules;
 import com.cv.dataqualityapi.service.GenerateRulesJsonService;
 
 @Service
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GenerateRulesJsonServiceImpl implements GenerateRulesJsonService {
 
 	@Autowired

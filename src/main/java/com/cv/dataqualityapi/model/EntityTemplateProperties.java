@@ -37,6 +37,10 @@ public class EntityTemplateProperties {
     @Column(name = "entity_template_prop_desc")
     private String entitytemplatepropDesc;
 
+//    @ApiModelProperty(notes = "entity_template_prop_Subtype", example = "Source")
+//    @Column(name = "entity_type")
+//    private String entitytemplatepropSubType;
+
     @ApiModelProperty(notes = "entity_template_prop_type", example = "Source")
     @Column(name = "entity_template_prop_type")
     private String entitytemplatepropType;

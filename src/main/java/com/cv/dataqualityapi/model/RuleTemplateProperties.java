@@ -36,8 +36,8 @@ public class RuleTemplateProperties {
     @Column(name = "rule_template_prop_type",nullable = false, length = 200)
     private String ruletemplatepropertiesType;
 
-    @ApiModelProperty(notes = "rule_template_prop_value", example = "1", required = true)
-    @Column(name = "rule_template_prop_value",nullable = false, length = 200)
+    @ApiModelProperty(notes = "rule_template_prop_value")
+    @Column(name = "rule_template_prop_value")
     private String ruletemplatepropertiesValue;
 
     @ApiModelProperty(notes = "rule_template_prop_desc", example = "1", required = true)

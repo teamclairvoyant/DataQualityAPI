@@ -26,13 +26,13 @@ public class RuleSet {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "rule_set_id")
+	@Column(name = "ruleset_id")
 	private Integer rulesetId;
 
-	@Column(name = "rule_set_name", nullable = false, length = 100)
+	@Column(name = "ruleset_name", nullable = false, length = 100)
 	private String rulesetName;
 
-	@Column(name = "rule_set_desc", nullable = false, length = 200)
+	@Column(name = "ruleset_desc", nullable = false, length = 200)
 	private String rulesetDesc;
 
 	@Column(name = "notification_email", nullable = false, length = 200)
